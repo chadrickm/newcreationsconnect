@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>New Event (Draft)</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <p>
+    You will be assigned as the first Organizer (Event Admin) of this event. You can add other organizers or transfer admin rights.
+  </p>
+  <ion-item>
+    <ion-label color="primary" stacked>Event Name</ion-label>
+    <ion-input type="text" placeholder="Event Name" [(ngModel)]="newEvent.name"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Start Date</ion-label>
+    <ion-datetime displayFormat="MMM D, YYYY" [(ngModel)]="newEvent.startDate"></ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label>End Date</ion-label>
+    <ion-datetime displayFormat="MMM D, YYYY" [(ngModel)]="newEvent.endDate"></ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" stacked>Address</ion-label>
+    <ion-input type="text" placeholder="Address" [(ngModel)]="newEvent.address"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" stacked>City</ion-label>
+    <ion-input type="text" placeholder="Address" [(ngModel)]="newEvent.city"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" stacked>State</ion-label>
+    <ion-input type="text" placeholder="Address" [(ngModel)]="newEvent.state"></ion-input>
+  </ion-item>
+</ion-content>
