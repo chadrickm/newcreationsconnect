@@ -1,0 +1,25 @@
+<ion-content>
+    <p>
+        <button ion-button (click)="login()">Login</button>
+        <button ion-button (click)="logout()">Log Out</button>
+    </p>
+    <ion-item>
+        <ion-label color="primary" stacked>Full Name</ion-label>
+        <ion-input type="text" placeholder="Full Name" [(ngModel)]="newUser.name"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label color="primary" stacked>Email</ion-label>
+        <ion-input type="text" placeholder="Email" [(ngModel)]="newUser.email"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label color="primary" stacked>User Name</ion-label>
+        <ion-input type="text" placeholder="Username" [(ngModel)]="newUser.username"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Password</ion-label>
+        <ion-input type="password" [(ngModel)]="newUser.password"></ion-input>
+    </ion-item>
+    <p>
+        <button ion-button (click)="register()">Register</button>
+    </p>
+</ion-content>

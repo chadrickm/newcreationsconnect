@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 import { Event } from '../../_models/Event';
 
@@ -9,14 +9,16 @@ import { Event } from '../../_models/Event';
 })
 export class EventDetail implements OnInit {
 
+  id: string;
   newEvent: Event;
 
-  constructor(public navCtrl: NavController) {
-    
-  }
+  constructor(public navCtrl: NavController, private navParams: NavParams) { }
 
   ngOnInit() {
-    this.newEvent = new Event();
+    this.id = this.navParams.get('id');
+    if (this.id === 'new') {
+      this.newEvent = new Event();
+      this.newEvent.status = 'Draft';
+    }
   }
-
 }

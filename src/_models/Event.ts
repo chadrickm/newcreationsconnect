@@ -1,4 +1,5 @@
 export class Event {
+    status: String;
     name: String;
     startDate: Date;
     endDate: Date;

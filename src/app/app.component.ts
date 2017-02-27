@@ -4,6 +4,8 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { EventDetail } from '../pages/event-detail/event-detail';
 import { EventList } from '../pages/event-list/event-list';
+import { Home } from '../pages/home/home';
+import { Login } from '../pages/login/login';
 
 
 @Component({
@@ -12,19 +14,19 @@ import { EventList } from '../pages/event-list/event-list';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = EventDetail;
+  rootPage: any = Home;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{title: string, component: any, params: any}>;
 
   constructor(public platform: Platform) {
     this.initializeApp();
-
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'New Event (Draft)', component: EventDetail },
-      { title: 'Event List', component: EventList }
+      //{ title: 'New Creations Connect', component: Home, params: undefined },
+      { title: 'New Event (Draft)', component: EventDetail, params: {id: 'new'} },
+      { title: 'Upcoming Events', component: EventList, params: undefined },
+      { title: 'Login', component: Login, params: undefined }
     ];
-
   }
 
   initializeApp() {
@@ -39,6 +41,6 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    this.nav.push(page.component, page.params);
   }
 }
