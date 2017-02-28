@@ -24,8 +24,7 @@ export class MyApp {
     this.pages = [
       //{ title: 'New Creations Connect', component: Home, params: undefined },
       { title: 'New Event (Draft)', component: EventDetail, params: {id: 'new'} },
-      { title: 'Upcoming Events', component: EventList, params: undefined },
-      { title: 'Login', component: Login, params: undefined }
+      { title: 'Upcoming Events', component: EventList, params: undefined }
     ];
   }
 

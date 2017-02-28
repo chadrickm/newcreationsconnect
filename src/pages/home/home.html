@@ -9,12 +9,12 @@
 
 <ion-content class="card-list">
 
-    <ion-card>
+    <ion-card (click)="goToEventListPage()">
         <div class="card-title">Upcoming Events</div>
-        <div class="card-subtitle">{{eventCount}} events</div>
+        <div class="card-subtitle">There are {{eventCount}} upcoming events.</div>
     </ion-card>
 
-    <ion-card>
+    <ion-card (click)="goToNewEventDetailPage()">
         <div class="card-title">New Event (Draft)</div>
         <div class="card-subtitle">Organize A New Event</div>
     </ion-card>

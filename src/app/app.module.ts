@@ -7,6 +7,7 @@ import { EventDetail } from '../pages/event-detail/event-detail';
 import { EventList } from '../pages/event-list/event-list';
 import { Home } from '../pages/home/home';
 import { Login } from '../pages/login/login';
+import { Register } from '../pages/register/register';
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -21,11 +22,12 @@ const cloudSettings: CloudSettings = {
 
 @NgModule({
   declarations: [
-    MyApp,
     EventDetail,
     EventList,
     Home,
-    Login
+    Login,
+    MyApp,
+    Register
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -37,7 +39,8 @@ const cloudSettings: CloudSettings = {
     EventDetail,
     EventList,
     Home,
-    Login
+    Login,
+    Register
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { Auth, User, UserDetails, IDetailedError } from '@ionic/cloud-angular';
+import { NavController, NavParams } from 'ionic-angular';
+import { Auth, User } from '@ionic/cloud-angular';
 
-import { RegisteredUser } from '../../_models/RegisteredUser';
+import { LoginCriteria } from '../../_models/LoginCriteria';
+import { Register } from '../../pages/register/register';
 
 @Component({
   selector: 'login-page',
@@ -10,47 +11,34 @@ import { RegisteredUser } from '../../_models/RegisteredUser';
 })
 export class Login implements OnInit {
 
-  newUser: RegisteredUser;
-  loginResults: any;
-  authResults: any;
+  loginCriteria: LoginCriteria;
+  isAuthenticated: boolean;
 
-  constructor(public auth: Auth, public user: User) { }
+  constructor(
+    public auth: Auth,
+    public navController: NavController,
+    private navParams: NavParams,
+    public user: User) { }
 
   ngOnInit() {
-    this.newUser = new RegisteredUser();
-    console.log(this.user);
-    console.log(this.auth.isAuthenticated());
-  }
-
-  register() {
-    this.auth.signup(this.newUser).then(results => {
-      this.loginResults = results;
-      console.log(this.user);
-      console.log(this.loginResults);
-    },
-      (err: IDetailedError<string[]>) => {
-        for (let e of err.details) {
-          if (e === 'conflict_email') {
-            alert('Email already exists.');
-          } else {
-            // handle other errors
-          }
-        }
-      });
+    this.isAuthenticated = this.auth.isAuthenticated();
+    this.loginCriteria = new LoginCriteria();
   }
 
   login() {
-    this.auth.login('basic', this.newUser).then(results => {
-      this.authResults = results;
-      console.log(this.user);
-      console.log(this.auth.isAuthenticated());
+    this.auth.login('basic', this.loginCriteria).then(results => {
+      if (this.auth.isAuthenticated()){
+        this.navController.pop();
+      }
     });
   }
 
   logout() {
     this.auth.logout();
-    console.log(this.user);
-    console.log(this.auth.isAuthenticated());
+    this.isAuthenticated = this.auth.isAuthenticated();
   }
 
+  goToRegisterPage() {
+    this.navController.push(Register);
+  }
 }

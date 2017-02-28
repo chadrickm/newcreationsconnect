@@ -1,0 +1,40 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+        <ion-title>New User Register</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <div *ngIf="isAuthenticated">
+        <p>
+            You are already registered and logged in.
+        </p>
+        <p>
+            <button ion-button block (click)="logout()">Log Out</button>
+        </p>
+    </div>
+    <div *ngIf="!isAuthenticated">
+        <ion-item>
+            <ion-label color="primary" stacked>Full Name</ion-label>
+            <ion-input type="text" placeholder="Full Name" [(ngModel)]="registeredUser.name"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary" stacked>Email</ion-label>
+            <ion-input type="text" placeholder="Email" [(ngModel)]="registeredUser.email"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary" stacked>User Name</ion-label>
+            <ion-input type="text" placeholder="Username" [(ngModel)]="registeredUser.username"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Password</ion-label>
+            <ion-input type="password" [(ngModel)]="registeredUser.password"></ion-input>
+        </ion-item>
+        <p>
+            <button ion-button block (click)="register()">Register</button>
+        </p>
+    </div>
+</ion-content>
