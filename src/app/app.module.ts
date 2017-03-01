@@ -4,6 +4,7 @@ import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { MyApp } from './app.component';
 
 import { UtilityService } from '../_services/_common/utility.service';
+import { EventService } from '../_services/event.service';
 import { ValidationService, ValidationMessageTypes } from '../_services/_common/validation.service';
 
 import { EventDetail } from '../pages/event-detail/event-detail';
@@ -46,6 +47,7 @@ const cloudSettings: CloudSettings = {
     Register
   ],
   providers: [
+    EventService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UtilityService,
     ValidationMessageTypes,
