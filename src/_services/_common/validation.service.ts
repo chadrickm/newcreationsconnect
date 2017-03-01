@@ -1,7 +1,9 @@
-import { UtilityService } from '../_services/_common/utility.service';
-import { ValidationResult } from '../_models/ValidationResult';
+import { Injectable } from '@angular/core';
 
-import { Event } from '../_models/Event';
+import { UtilityService } from '../_common/utility.service';
+import { ValidationResult } from '../../_models/ValidationResult';
+
+import { Event } from '../../_models/Event';
 
 export class ValidationMessageTypes {
     error: string = 'Error';
@@ -10,6 +12,7 @@ export class ValidationMessageTypes {
     success: string = 'Success';
 }
 
+@Injectable()
 export class ValidationService {
 
     constructor( private utility: UtilityService, private types: ValidationMessageTypes ) { }

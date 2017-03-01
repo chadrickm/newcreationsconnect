@@ -3,6 +3,9 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { MyApp } from './app.component';
 
+import { UtilityService } from '../_services/_common/utility.service';
+import { ValidationService, ValidationMessageTypes } from '../_services/_common/validation.service';
+
 import { EventDetail } from '../pages/event-detail/event-detail';
 import { EventList } from '../pages/event-list/event-list';
 import { Home } from '../pages/home/home';
@@ -30,8 +33,8 @@ const cloudSettings: CloudSettings = {
     Register
   ],
   imports: [
-    IonicModule.forRoot(MyApp),
-    CloudModule.forRoot(cloudSettings)
+    CloudModule.forRoot(cloudSettings),
+    IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -42,6 +45,11 @@ const cloudSettings: CloudSettings = {
     Login,
     Register
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    UtilityService,
+    ValidationMessageTypes,
+    ValidationService
+  ]
 })
 export class AppModule {}

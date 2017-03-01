@@ -5,7 +5,6 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 import { EventDetail } from '../pages/event-detail/event-detail';
 import { EventList } from '../pages/event-list/event-list';
 import { Home } from '../pages/home/home';
-import { Login } from '../pages/login/login';
 
 
 @Component({

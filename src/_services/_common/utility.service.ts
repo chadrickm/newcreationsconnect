@@ -1,3 +1,6 @@
+import { Injectable } from '@angular/core';
+
+@Injectable()
 export class UtilityService {
     isNullOrEmpty(value: any): boolean {
         var isNullOrEmpty = false;
