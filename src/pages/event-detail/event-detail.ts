@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Auth } from '@ionic/cloud-angular';
 
-import { ValidationResult } from '../../_services/_common/validation.service';
+import { ValidationResult } from '../../_services/_common/validation';
 
 import { EventService } from '../../_services/event.service';
 

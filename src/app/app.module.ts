@@ -5,7 +5,7 @@ import { MyApp } from './app.component';
 
 import { UtilityService } from '../_services/_common/utility.service';
 import { EventService } from '../_services/event.service';
-import { ValidationService, ValidationMessageTypes } from '../_services/_common/validation.service';
+import { ValidationMessageTypes } from '../_services/_common/validation';
 
 import { EventDetail } from '../pages/event-detail/event-detail';
 import { EventList } from '../pages/event-list/event-list';
@@ -50,8 +50,7 @@ const cloudSettings: CloudSettings = {
     EventService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UtilityService,
-    ValidationMessageTypes,
-    ValidationService
+    ValidationMessageTypes
   ]
 })
 export class AppModule {}
