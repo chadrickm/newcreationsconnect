@@ -37,7 +37,7 @@
       <ion-input type="text" placeholder="State" [(ngModel)]="newEvent.state"></ion-input>
     </ion-item>
     <p>
-      <button ion-button>Next</button>
+      <button ion-button (click)="saveEvent()">Next</button>
     </p>
   </div>
 </ion-content>

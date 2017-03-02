@@ -1,10 +1,5 @@
-import { Injectable } from '@angular/core';
-import { UtilityService } from '../_common/utility.service';
-
-import { Event } from '../../_models/Event';
-
 export class ValidationResult {
-    messages: ValidationMessage[];
+    messages: ValidationMessage[] = [];
 
     addMessage(messageText: string, messageType: string) {
         this.messages.push(new ValidationMessage(messageText, messageType))

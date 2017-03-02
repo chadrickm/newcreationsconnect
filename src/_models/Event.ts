@@ -8,4 +8,6 @@ export class Event {
     state: String;
     costPerPersonOld: number;
     costPerPersonYoung: number;
+    createdByUsername: String;
+    createdByDisplayName: String;
 }

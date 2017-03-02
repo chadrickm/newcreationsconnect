@@ -5,8 +5,9 @@ import { MyApp } from './app.component';
 
 import { UtilityService } from '../_services/_common/utility.service';
 import { EventService } from '../_services/event.service';
-import { ValidationMessageTypes } from '../_services/_common/validation';
+import { ValidationResult, ValidationMessageTypes } from '../_services/_common/validation';
 
+import { ValidationResults } from '../app/components/_common/validation-results/validation-results.component';
 import { EventDetail } from '../pages/event-detail/event-detail';
 import { EventList } from '../pages/event-list/event-list';
 import { Home } from '../pages/home/home';
@@ -31,7 +32,8 @@ const cloudSettings: CloudSettings = {
     Home,
     Login,
     MyApp,
-    Register
+    Register,
+    ValidationResults
   ],
   imports: [
     CloudModule.forRoot(cloudSettings),
@@ -44,13 +46,15 @@ const cloudSettings: CloudSettings = {
     EventList,
     Home,
     Login,
-    Register
+    Register,
+    ValidationResults
   ],
   providers: [
     EventService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UtilityService,
-    ValidationMessageTypes
+    ValidationMessageTypes,
+    ValidationResult
   ]
 })
 export class AppModule {}
