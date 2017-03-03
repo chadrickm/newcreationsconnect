@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import { Database } from '@ionic/cloud-angular';
+import { EventService } from '../../_services/event.service';
 
 import { EventList } from '../event-list/event-list';
 import { EventDetail } from '../event-detail/event-detail';
@@ -12,21 +12,16 @@ import { EventDetail } from '../event-detail/event-detail';
 })
 export class Home implements OnInit {
 
-  eventsDbCollection = this.db.collection("events");
-  eventCount: any;
-  //events = this.db.collection("events");
+  eventCount: number;
 
-  constructor(public navCtrl: NavController, public db: Database) { }
+  constructor(public navCtrl: NavController, private eventService: EventService) { }
 
   ngOnInit() {
-    this.db.connect();
-    this.eventsDbCollection
-      .findAll({status: "Active"})
-      .fetch()
-      .subscribe(events => {
-        if (events === undefined) this.eventCount = 0;
-        if (events !== undefined) this.eventCount = events.length;
-      });
+    this.eventService.activeEvents.subscribe(events => {
+      console.log(events)
+      // if (events == undefined) this.eventCount = 0;
+      // if (events != undefined) this.eventCount = events.count;
+    });
   }
 
   goToEventListPage() {

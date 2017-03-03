@@ -9,6 +9,7 @@ import { ValidationResult } from '../../../../_services/_common/validation';
 })
 export class ValidationResults implements OnInit {
 
+    title: string;
     validationResult: ValidationResult;
 
     constructor(
@@ -18,6 +19,7 @@ export class ValidationResults implements OnInit {
     ) {
         this.validationResult = new ValidationResult();
         this.validationResult.messages = this.navParams.get('messages');
+        this.title = this.navParams.get('title');
     }
 
     ngOnInit() {

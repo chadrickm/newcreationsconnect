@@ -6,9 +6,12 @@ export class ValidationResult {
     }
 
     isSuccessful(): boolean {
+        var isSuccessful = true;
         if (this.messages !== undefined && this.messages.length > 0) {
-            return false;
+            isSuccessful = false;
         }
+
+        return isSuccessful;
     }
 }
 

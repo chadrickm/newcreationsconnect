@@ -56,6 +56,8 @@ export class EventDetail implements OnInit, OnChanges {
     if (!this.validationResult.isSuccessful()) {
       let modal = this.modalController.create(ValidationResults, {messages: this.validationResult.messages, title: 'Errors Saving Event'});
       modal.present();
+    } else {
+      this.navController.pop();
     }
   }
 }
