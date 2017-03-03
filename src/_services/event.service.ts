@@ -13,7 +13,7 @@ import { Event } from '../_models/Event';
 export class EventService {
 
     eventsDbCollection = this.db.collection("events");
-    activeEvents: ReplaySubject<Event> = new ReplaySubject<Event>();
+    activeEvents: ReplaySubject<Event[]> = new ReplaySubject<Event[]>();
 
     constructor(
         private db: Database,
@@ -26,7 +26,7 @@ export class EventService {
             .fetch()
             .subscribe(activeEvents => {
                 console.log(activeEvents);
-                this.activeEvents = activeEvents;
+                this.activeEvents.next(activeEvents);
             });
     }
 
