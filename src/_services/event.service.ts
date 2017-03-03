@@ -23,7 +23,7 @@ export class EventService {
         this.db.status().subscribe(status => console.log(status));
         this.eventsDbCollection
             .findAll({ status: "Active" })
-            .fetch()
+            .watch()
             .subscribe(activeEvents => {
                 console.log(activeEvents);
                 this.activeEvents.next(activeEvents);
