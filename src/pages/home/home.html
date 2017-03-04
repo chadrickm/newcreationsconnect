@@ -19,6 +19,15 @@
         </div>
     </ion-card>
 
+    <ion-card *ngIf="draftCount > 0" (click)="goToEventDraftListPage()">
+        <div class="card-title">Your Drafts</div>
+        <div class="card-subtitle">
+          You have
+          <ion-badge>{{draftCount}}</ion-badge>
+          <span *ngIf="draftCount == 0 || draftCount > 1">drafts</span><span *ngIf="draftCount == 1">draft</span>.
+        </div>
+    </ion-card>
+
     <ion-card (click)="goToNewEventDetailPage()">
         <div class="card-title">New Event (Draft)</div>
         <div class="card-subtitle">Organize A New Event</div>

@@ -1,6 +1,7 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+
 import { MyApp } from './app.component';
 
 import { UtilityService } from '../_services/_common/utility.service';
@@ -9,6 +10,8 @@ import { ValidationResult, ValidationMessageTypes } from '../_services/_common/v
 
 import { ValidationResults } from '../app/components/_common/validation-results/validation-results.component';
 import { EventDetail } from '../pages/event-detail/event-detail';
+import { EventDraftDetail } from '../pages/event-draft-detail/event-draft-detail';
+import { EventDraftList } from '../pages/event-draft-list/event-draft-list';
 import { EventNew } from '../pages/event-new/event-new';
 import { EventList } from '../pages/event-list/event-list';
 import { Home } from '../pages/home/home';
@@ -29,6 +32,8 @@ const cloudSettings: CloudSettings = {
 @NgModule({
   declarations: [
     EventDetail,
+    EventDraftDetail,
+    EventDraftList,
     EventList,
     EventNew,
     Home,
@@ -45,6 +50,8 @@ const cloudSettings: CloudSettings = {
   entryComponents: [
     MyApp,
     EventDetail,
+    EventDraftDetail,
+    EventDraftList,
     EventList,
     EventNew,
     Home,

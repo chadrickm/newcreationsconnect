@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as _ from 'underscore';
 
 import { Database } from '@ionic/cloud-angular';
 //import { Observable } from 'rxjs';
@@ -14,6 +15,7 @@ export class EventService {
 
     eventsDbCollection = this.db.collection("events");
     activeEvents: ReplaySubject<Event[]> = new ReplaySubject<Event[]>();
+    draftEvents: ReplaySubject<Event[]> = new ReplaySubject<Event[]>();
 
     constructor(
         private db: Database,
@@ -22,10 +24,15 @@ export class EventService {
     ) {
         this.db.status().subscribe(status => console.log(status));
         this.eventsDbCollection
-            .findAll({ status: "Active" })
+            .findAll({ status: "Active" }, { status: "Draft" })
             .watch()
-            .subscribe(activeEvents => {
-                this.activeEvents.next(activeEvents);
+            .subscribe(events => {
+                this.activeEvents.next(_.filter(events, event => {
+                    return event.status === 'Active';
+                }));
+                this.draftEvents.next(_.filter(events, event => {
+                    return event.status === 'Draft';
+                }));
             });
     }
 

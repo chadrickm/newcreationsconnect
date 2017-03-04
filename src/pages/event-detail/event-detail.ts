@@ -13,7 +13,7 @@ import { Event } from '../../_models/Event';
 })
 export class EventDetail {
 
-  event: Observable<Event> = new Observable<Event>();
+  event: Event = new Event();
 
   constructor(
     private eventService: EventService,
