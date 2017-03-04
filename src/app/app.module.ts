@@ -9,6 +9,7 @@ import { ValidationResult, ValidationMessageTypes } from '../_services/_common/v
 
 import { ValidationResults } from '../app/components/_common/validation-results/validation-results.component';
 import { EventDetail } from '../pages/event-detail/event-detail';
+import { EventNew } from '../pages/event-new/event-new';
 import { EventList } from '../pages/event-list/event-list';
 import { Home } from '../pages/home/home';
 import { Login } from '../pages/login/login';
@@ -29,6 +30,7 @@ const cloudSettings: CloudSettings = {
   declarations: [
     EventDetail,
     EventList,
+    EventNew,
     Home,
     Login,
     MyApp,
@@ -44,6 +46,7 @@ const cloudSettings: CloudSettings = {
     MyApp,
     EventDetail,
     EventList,
+    EventNew,
     Home,
     Login,
     Register,

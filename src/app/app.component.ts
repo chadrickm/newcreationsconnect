@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
-import { EventDetail } from '../pages/event-detail/event-detail';
+import { EventNew } from '../pages/event-new/event-new';
 import { EventList } from '../pages/event-list/event-list';
 import { Home } from '../pages/home/home';
 
@@ -22,7 +22,7 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       //{ title: 'New Creations Connect', component: Home, params: undefined },
-      { title: 'New Event (Draft)', component: EventDetail, params: {id: 'new'} },
+      { title: 'New Event (Draft)', component: EventNew, params: {id: 'new'} },
       { title: 'Upcoming Events', component: EventList, params: undefined }
     ];
   }
