@@ -9,7 +9,7 @@
 
 <ion-content>
   <ion-list>
-    <button ion-item *ngFor="let event of events" (click)="navEventDetails()">
+    <button ion-item *ngFor="let event of events" (click)="navEventDetails(event.id)">
       {{event.name}}
     </button>
   </ion-list>

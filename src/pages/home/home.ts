@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Observable } from 'rxjs';
+//import { Observable } from 'rxjs';
 
 import { EventService } from '../../_services/event.service';
 
@@ -20,10 +20,7 @@ export class Home implements OnInit {
   ngOnInit() {
     console.log('ngOnInit blah');
     this.eventService.activeEvents.subscribe(events => {
-      console.log(events)
       this.eventCount = events.length;
-      // if (events == undefined) this.eventCount = 0;
-      // if (events != undefined) this.eventCount = events.count;
     });
   }
 

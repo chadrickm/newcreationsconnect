@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { Auth, User } from '@ionic/cloud-angular';
 
@@ -14,7 +14,7 @@ import { ValidationResults } from '../../app/components/_common/validation-resul
   selector: 'event-detail',
   templateUrl: 'event-detail.html'
 })
-export class EventDetail implements OnInit, OnChanges {
+export class EventDetail implements OnInit {
 
   id: string;
   newEvent: Event;
@@ -42,12 +42,9 @@ export class EventDetail implements OnInit, OnChanges {
       if (!this.auth.isAuthenticated()) {
         this.navController.push(Login);
       }
-    }
-  }
+    } else {
 
-  ngOnChanges() {
-    this.newEvent.createdByUsername = this.user.details.username;
-    this.newEvent.createdByDisplayName = this.user.details.name;
+    }
   }
 
   saveEvent() {

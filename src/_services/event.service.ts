@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Database } from '@ionic/cloud-angular';
-import { Observable } from 'rxjs';
+//import { Observable } from 'rxjs';
 
 import { ValidationResult, ValidationMessageTypes } from '../_services/_common/validation';
 import { UtilityService } from '../_services/_common/utility.service';
@@ -25,7 +25,6 @@ export class EventService {
             .findAll({ status: "Active" })
             .watch()
             .subscribe(activeEvents => {
-                console.log(activeEvents);
                 this.activeEvents.next(activeEvents);
             });
     }
