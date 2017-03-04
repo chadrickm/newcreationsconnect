@@ -35,7 +35,7 @@
     </ion-item>
     <p text-center>
       <button ion-button color="light" (click)="saveEvent()">Save</button>
-      <button ion-button color="light" (click)="saveEvent()">Sumbit for Publish</button>
+      <button ion-button color="light" (click)="saveEvent()">Sumbit for Review</button>
     </p>
   </div>
   <div>
@@ -43,11 +43,11 @@
       <ion-icon name="paper"></ion-icon>
       Event Details
     </button>
-    <button ion-button icon-left full>
+    <button ion-button icon-left full (click)="saveAndNavToEventSchedule()">
       <ion-icon name="calendar"></ion-icon>
       Schedule / Speakers
     </button>
-    <button ion-button icon-left full>
+    <button ion-button icon-left full (click)="saveAndNavToEventTeam()">
       <ion-icon name="people"></ion-icon>
       Organizer Team
     </button>

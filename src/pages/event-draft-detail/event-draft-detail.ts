@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams, ModalController } from 'ionic-angular';
+
+import { NavController, NavParams, ModalController, ToastController } from 'ionic-angular';
 import { Auth, User } from '@ionic/cloud-angular';
 
 import { ValidationResult } from '../../_services/_common/validation';
@@ -7,7 +8,6 @@ import { ValidationResult } from '../../_services/_common/validation';
 import { EventService } from '../../_services/event.service';
 
 import { Event } from '../../_models/Event';
-import { Login } from '../login/login';
 import { ValidationResults } from '../../app/components/_common/validation-results/validation-results.component';
 
 @Component({
@@ -25,6 +25,7 @@ export class EventDraftDetail implements OnInit {
     private modalController: ModalController,
     public navController: NavController, 
     private navParams: NavParams,
+    private toastController: ToastController,
     private user: User,
     private validationResult: ValidationResult
   ) { }
@@ -41,7 +42,25 @@ export class EventDraftDetail implements OnInit {
       let modal = this.modalController.create(ValidationResults, {messages: this.validationResult.messages, title: 'Errors Saving Event'});
       modal.present();
     } else {
-      alert('saved');
+      this.presentToast('Event Saved');
     }
+  }
+
+  saveAndNavToEventSchedule() {
+    alert('TODO: save and navigate to Schedule');
+  }
+
+  saveAndNavToEventTeam() {
+    alert('TODO: save and navigate to Team');
+  }
+
+  presentToast(_message: string) {
+    let toast = this.toastController.create({
+      message: _message,
+      duration: 3000,
+      position: "middle",
+      cssClass: "text-center"
+    });
+    toast.present();
   }
 }
