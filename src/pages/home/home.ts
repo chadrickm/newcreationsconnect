@@ -18,7 +18,6 @@ export class Home implements OnInit {
   constructor(public navCtrl: NavController, private eventService: EventService) { }
 
   ngOnInit() {
-    console.log('ngOnInit blah');
     this.eventService.activeEvents.subscribe(events => {
       this.eventCount = events.length;
     });

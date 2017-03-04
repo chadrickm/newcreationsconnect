@@ -43,6 +43,10 @@ export class EventService {
         return validationResult;
     }
 
+    getEvent(eventId: string) {
+        return this.eventsDbCollection.find({id: eventId}).fetch();
+    }
+
     validateEvent(event: Event, validationResult: ValidationResult): ValidationResult {
 
         if (this.util.isNullOrEmpty(event.status)) {

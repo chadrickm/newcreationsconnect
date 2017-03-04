@@ -19,7 +19,6 @@ export class EventList {
   constructor(public navController: NavController, private eventService: EventService) {
     this.eventService.activeEvents.subscribe(events => {
       this.events = events;
-      console.log(this.events);
     });
   }
 
