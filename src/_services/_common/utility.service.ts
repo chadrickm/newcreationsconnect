@@ -9,4 +9,9 @@ export class UtilityService {
         if (value === '') isNullOrEmpty = true;
         return isNullOrEmpty;
     }
+
+    addDays(date: Date, days: number): Date {
+        date.setDate(date.getDate() + days);
+        return date;
+    }
 }

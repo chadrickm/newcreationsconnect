@@ -5,10 +5,11 @@ import { NavController, NavParams, ModalController, ToastController } from 'ioni
 import { EventService } from '../../_services/event.service';
 import {ValidationResult} from '../../_services/_common/validation';
 import { Event } from '../../_models/Event';
-import { Activity } from '../../_models/Activity';
 
 import {ValidationResults} from '../../app/components/_common/validation-results/validation-results.component';
 import {EventDraftDetail} from '../event-draft-detail/event-draft-detail';
+
+import {EventSchedule} from '../../_models/_view-models/EventSchedule';
 
 @Component({
     selector: 'event-draft-schedule',
@@ -17,6 +18,7 @@ import {EventDraftDetail} from '../event-draft-detail/event-draft-detail';
 export class EventDraftSchedule {
 
     event: Event = new Event();
+    eventSchedule: EventSchedule;
     validationResult: ValidationResult;
 
     constructor(
@@ -30,6 +32,8 @@ export class EventDraftSchedule {
         this.eventService.getEvent(id).subscribe(event => {
             if (event.activities == undefined) event.activities = [];
             this.event = event
+            this.eventSchedule = new EventSchedule(this.event);
+            console.log(this.eventSchedule);
         });
     }
 

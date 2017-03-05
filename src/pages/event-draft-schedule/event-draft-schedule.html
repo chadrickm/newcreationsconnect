@@ -1,55 +1,39 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
+    <ion-navbar>
+        <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Schedule ({{event.status}})</ion-title>
-  </ion-navbar>
+        <ion-title>Schedule ({{event.status}})</ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <div *ngIf="event">
-    <ion-item>
-      <ion-label color="primary" stacked>Event Name</ion-label>
-      <ion-input type="text" placeholder="Event Name" [(ngModel)]="event.name"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>Start Date</ion-label>
-      <ion-datetime displayFormat="MMM D, YYYY" [(ngModel)]="event.startDate"></ion-datetime>
-    </ion-item>
-    <ion-item>
-      <ion-label>End Date</ion-label>
-      <ion-datetime displayFormat="MMM D, YYYY" [(ngModel)]="event.endDate"></ion-datetime>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>Address</ion-label>
-      <ion-input type="text" placeholder="Address" [(ngModel)]="event.address"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>City</ion-label>
-      <ion-input type="text" placeholder="City" [(ngModel)]="event.city"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>State</ion-label>
-      <ion-input type="text" placeholder="State" [(ngModel)]="event.state"></ion-input>
-    </ion-item>
-    <p text-center>
-      <button ion-button color="light" (click)="saveEvent()">Save</button>
-      <button ion-button color="light" (click)="saveEvent()">Sumbit for Review</button>
-    </p>
-  </div>
-  <div>
-    <button ion-button icon-left full (click)="saveAndNavToEventDetails()">
+    <div *ngIf="event">
+        <h1>{{event.name}}</h1>
+        <p *ngIf="event.startDate === event.endDate" class="subheader-date">
+            {{event.startDate | date: 'EEEE, MMM d, y'}}
+        </p>
+        <p *ngIf="event.startDate !== event.endDate" class="subheader-date">
+            {{event.startDate | date: 'EEEE, MMM d, y'}} to {{event.endDate | date: 'EEEE, MMM d, y'}}
+        </p>
+    </div>
+    <div *ngIf="eventSchedule">
+        <div *ngFor="let day of eventSchedule.days">
+            {{day | date: 'EEEE, MMM d, y'}}
+        </div>
+    </div>
+    <div>
+        <button ion-button icon-left full (click)="saveAndNavToEventDetails()">
       <ion-icon name="paper"></ion-icon>
       Event Details
     </button>
-    <button ion-button icon-left full outline>
+        <button ion-button icon-left full outline>
       <ion-icon name="calendar"></ion-icon>
       Schedule / Speakers
     </button>
-    <button ion-button icon-left full (click)="saveAndNavToEventTeam()">
+        <button ion-button icon-left full (click)="saveAndNavToEventTeam()">
       <ion-icon name="people"></ion-icon>
       Organizer Team
     </button>
-  </div>
+    </div>
 </ion-content>

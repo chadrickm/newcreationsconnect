@@ -3,6 +3,7 @@ export class Activity {
     endDateTimeGmt: Date;
     type: string;
     name: string;
+    speaker: string;
     description: string;
     url: string;
     accessCode: string;
