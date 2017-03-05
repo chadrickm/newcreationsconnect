@@ -18,11 +18,11 @@
     </ion-item>
     <ion-item>
       <ion-label>Start Date</ion-label>
-      <ion-datetime displayFormat="MMM D, YYYY" [(ngModel)]="newEvent.startDate"></ion-datetime>
+      <ion-datetime displayFormat="MMM D, YY h:mm" [(ngModel)]="newEvent.startDateString"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label>End Date</ion-label>
-      <ion-datetime displayFormat="MMM D, YYYY" [(ngModel)]="newEvent.endDate"></ion-datetime>
+      <ion-datetime displayFormat="MMM D, YYYY" [(ngModel)]="newEvent.endDateString"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Address</ion-label>

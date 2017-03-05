@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { Auth, User } from '@ionic/cloud-angular';
+import * as moment from 'moment';
 
 import { ValidationResult } from '../../_services/_common/validation';
 
@@ -35,6 +36,8 @@ export class EventNew implements OnInit {
     if (this.id === 'new') {
       this.newEvent = new Event();
       this.newEvent.status = 'Draft';
+      this.newEvent.startDateString = moment().startOf('day').toISOString();
+      this.newEvent.endDateString = moment().endOf('day').toISOString();
       if (this.auth.isAuthenticated()) {
         this.newEvent.createdByUsername = this.user.details.username;
         this.newEvent.createdByDisplayName = this.user.details.name;

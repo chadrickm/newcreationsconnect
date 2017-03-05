@@ -18,8 +18,8 @@
         </p>
     </div>
     <div *ngIf="eventSchedule">
-        <div *ngFor="let day of eventSchedule.days">
-            {{day | date: 'EEEE, MMM d, y'}}
+        <div *ngFor="let scheduleDay of eventSchedule.days">
+            <h2>{{scheduleDay.day | date: 'EEEE, MMM d, y'}}</h2>
         </div>
     </div>
     <div>

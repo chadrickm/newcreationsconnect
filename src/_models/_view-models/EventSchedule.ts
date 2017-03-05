@@ -16,7 +16,7 @@ export class EventSchedule {
         var distinctDays = _.uniq(activityDates);
         _.each(distinctDays, day => {
             var newDay = new EventScheduleDay();
-            newDay.day = day;
+            newDay.day = day; // this is a js Date - is that what typescript and angular expects?
             newDay.activities = _.filter(event.activities, activity => {
                 var firstSecondOfTomorrow = this.addDays(newDay.day, 1);
                 return activity.startDateTimeGmt >= newDay.day && activity.startDateTimeGmt < firstSecondOfTomorrow;
@@ -30,7 +30,7 @@ export class EventSchedule {
             var foundEventScheduleDate = _.find(this.days, day => {return new Date(day.day) === dateToken});
             if (!foundEventScheduleDate) {
                 var newDay = new EventScheduleDay();
-                newDay.day = dateToken;
+                newDay.day = new Date(dateToken);
                 this.days.push(newDay);
             }
             dateToken = this.addDays(dateToken, 1);
@@ -41,7 +41,9 @@ export class EventSchedule {
 
     //TODO: find out how to get the UtilityService.
     private addDays(date: Date, days: number): Date {
+        console.log('dateBefore', date)
         date.setDate(date.getDate() + days);
+        console.log('dateAfter', date);
         return date;
     }
 }

@@ -4,8 +4,10 @@ export class Event {
     id: string;
     status: string;
     name: string;
-    startDate: Date;
-    endDate: Date;
+    startDateUtc: Date;
+    startDateString: string;
+    endDateUtc: Date;
+    endDateString: String;
     eventType: string;
     address: string;
     city: string;

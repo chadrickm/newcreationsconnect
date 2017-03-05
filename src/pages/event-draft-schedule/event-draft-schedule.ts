@@ -65,7 +65,7 @@ export class EventDraftSchedule {
         let toast = this.toastController.create({
             message: _message,
             duration: 3000,
-            position: "middle",
+            position: "bottom",
             cssClass: "text-center"
         });
         toast.present();

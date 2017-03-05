@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as _ from 'underscore';
+import * as moment from 'moment';
 
 import { Database } from '@ionic/cloud-angular';
 //import { Observable } from 'rxjs';
@@ -38,6 +39,12 @@ export class EventService {
 
     saveEvent(event: Event, validationResult: ValidationResult): ValidationResult {
 
+        //Convert Local Date to GMT datetime before saving
+        event.startDateUtc = moment(event.startDateString).utc().toDate();
+        event.startDateString = moment(event.startDateString).utc().toISOString();
+        event.endDateUtc = moment(event.endDateString).utc().toDate();
+        event.endDateString = moment(event.endDateString).utc().toISOString();
+
         this.validateEvent(event, validationResult);
         if (!validationResult.isSuccessful()) return validationResult;
 
@@ -64,11 +71,11 @@ export class EventService {
             validationResult.addMessage("Name is Required", this.messageTypes.error);
         }
 
-        if (this.util.isNullOrEmpty(event.startDate)) {
+        if (this.util.isNullOrEmpty(event.startDateString)) {
             validationResult.addMessage("Start Date is Required", this.messageTypes.error);
         }
 
-        if (this.util.isNullOrEmpty(event.endDate)) {
+        if (this.util.isNullOrEmpty(event.endDateString)) {
             validationResult.addMessage("End Date is Required", this.messageTypes.error);
         }
 
