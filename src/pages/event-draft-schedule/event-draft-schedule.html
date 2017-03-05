@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Schedule ({{event.status}})</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div *ngIf="event">
+    <ion-item>
+      <ion-label color="primary" stacked>Event Name</ion-label>
+      <ion-input type="text" placeholder="Event Name" [(ngModel)]="event.name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Start Date</ion-label>
+      <ion-datetime displayFormat="MMM D, YYYY" [(ngModel)]="event.startDate"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>End Date</ion-label>
+      <ion-datetime displayFormat="MMM D, YYYY" [(ngModel)]="event.endDate"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Address</ion-label>
+      <ion-input type="text" placeholder="Address" [(ngModel)]="event.address"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>City</ion-label>
+      <ion-input type="text" placeholder="City" [(ngModel)]="event.city"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>State</ion-label>
+      <ion-input type="text" placeholder="State" [(ngModel)]="event.state"></ion-input>
+    </ion-item>
+    <p text-center>
+      <button ion-button color="light" (click)="saveEvent()">Save</button>
+      <button ion-button color="light" (click)="saveEvent()">Sumbit for Review</button>
+    </p>
+  </div>
+  <div>
+    <button ion-button icon-left full (click)="saveAndNavToEventDetails()">
+      <ion-icon name="paper"></ion-icon>
+      Event Details
+    </button>
+    <button ion-button icon-left full outline>
+      <ion-icon name="calendar"></ion-icon>
+      Schedule / Speakers
+    </button>
+    <button ion-button icon-left full (click)="saveAndNavToEventTeam()">
+      <ion-icon name="people"></ion-icon>
+      Organizer Team
+    </button>
+  </div>
+</ion-content>

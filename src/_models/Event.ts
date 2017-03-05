@@ -1,14 +1,27 @@
+import {Activity} from './Activity';
+
 export class Event {
-    id: String;
-    status: String;
-    name: String;
+    id: string;
+    status: string;
+    name: string;
     startDate: Date;
     endDate: Date;
-    address: String;
-    city: String;
-    state: String;
+    eventType: string;
+    address: string;
+    city: string;
+    state: string;
+    url: string;
+    accessCode: string;
     costPerPersonOld: number;
     costPerPersonYoung: number;
-    createdByUsername: String;
-    createdByDisplayName: String;
+    createdByUsername: string;
+    createdByDisplayName: string;
+
+    activities: Activity[];
+}
+
+export class EventTypes {
+    online: string = 'Online';
+    conferenceCall: string = 'Conference Call'
+    inPerson: string = 'In Person';
 }

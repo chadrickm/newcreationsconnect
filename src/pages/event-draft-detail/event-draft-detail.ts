@@ -9,6 +9,7 @@ import { EventService } from '../../_services/event.service';
 
 import { Event } from '../../_models/Event';
 import { ValidationResults } from '../../app/components/_common/validation-results/validation-results.component';
+import {EventDraftSchedule} from '../event-draft-schedule/event-draft-schedule';
 
 @Component({
   selector: 'event-draft-detail',
@@ -47,7 +48,12 @@ export class EventDraftDetail implements OnInit {
   }
 
   saveAndNavToEventSchedule() {
-    alert('TODO: save and navigate to Schedule');
+    this.saveEvent();
+    this.navController.push(EventDraftSchedule, {id: this.event.id})
+      .then(() => {
+        const index = this.navController.getActive().index;
+        this.navController.remove(index-1);
+      });
   }
 
   saveAndNavToEventTeam() {

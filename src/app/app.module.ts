@@ -7,10 +7,13 @@ import { MyApp } from './app.component';
 import { UtilityService } from '../_services/_common/utility.service';
 import { EventService } from '../_services/event.service';
 import { ValidationResult, ValidationMessageTypes } from '../_services/_common/validation';
+import { EventTypes } from '../_models/Event';
+import { ActivityTypes } from '../_models/Activity';
 
 import { ValidationResults } from '../app/components/_common/validation-results/validation-results.component';
 import { EventDetail } from '../pages/event-detail/event-detail';
 import { EventDraftDetail } from '../pages/event-draft-detail/event-draft-detail';
+import { EventDraftSchedule } from '../pages/event-draft-schedule/event-draft-schedule';
 import { EventDraftList } from '../pages/event-draft-list/event-draft-list';
 import { EventNew } from '../pages/event-new/event-new';
 import { EventList } from '../pages/event-list/event-list';
@@ -33,6 +36,7 @@ const cloudSettings: CloudSettings = {
   declarations: [
     EventDetail,
     EventDraftDetail,
+    EventDraftSchedule,
     EventDraftList,
     EventList,
     EventNew,
@@ -51,6 +55,7 @@ const cloudSettings: CloudSettings = {
     MyApp,
     EventDetail,
     EventDraftDetail,
+    EventDraftSchedule,
     EventDraftList,
     EventList,
     EventNew,
@@ -60,7 +65,9 @@ const cloudSettings: CloudSettings = {
     ValidationResults
   ],
   providers: [
+    ActivityTypes,
     EventService,
+    EventTypes,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UtilityService,
     ValidationMessageTypes,
