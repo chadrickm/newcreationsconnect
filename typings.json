@@ -1,6 +1,7 @@
 {
   "globalDependencies": {
     "moment": "registry:dt/moment#2.11.1+20161010105546",
+    "moment-timezone": "registry:dt/moment-timezone#0.2.5+20161208060822",
     "underscore": "registry:dt/underscore#1.8.3+20161123125004"
   }
 }

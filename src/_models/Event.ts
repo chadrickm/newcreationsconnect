@@ -18,6 +18,7 @@ export class Event {
     costPerPersonYoung: number;
     createdByUsername: string;
     createdByDisplayName: string;
+    timezoneOffset: number;
 
     activities: Activity[];
 }

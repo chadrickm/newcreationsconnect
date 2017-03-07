@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { Observable } from 'rxjs';
-
 import { EventService } from '../../_services/event.service';
 
 import { Event } from '../../_models/Event';

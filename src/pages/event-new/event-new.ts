@@ -19,6 +19,8 @@ export class EventNew implements OnInit {
 
   id: string;
   newEvent: Event;
+  startYearRange: number = moment().year();
+  endYearRange: number = moment().year() +2;
 
   constructor(
     public auth: Auth,
@@ -36,8 +38,10 @@ export class EventNew implements OnInit {
     if (this.id === 'new') {
       this.newEvent = new Event();
       this.newEvent.status = 'Draft';
-      this.newEvent.startDateString = moment().startOf('day').toISOString();
-      this.newEvent.endDateString = moment().endOf('day').toISOString();
+      this.newEvent.startDateString = moment().format();
+      this.newEvent.endDateString = moment().format();
+      this.newEvent.timezoneOffset = ((moment().toDate().getTimezoneOffset() / 60) * -1);
+      
       if (this.auth.isAuthenticated()) {
         this.newEvent.createdByUsername = this.user.details.username;
         this.newEvent.createdByDisplayName = this.user.details.name;
