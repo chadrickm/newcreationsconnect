@@ -1,8 +1,8 @@
 <ion-header>
     <ion-navbar>
         <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
+            <ion-icon name="menu"></ion-icon>
+        </button>
         <ion-title>Schedule ({{event.status}})</ion-title>
     </ion-navbar>
 </ion-header>
@@ -11,19 +11,26 @@
     <div *ngIf="event">
         <h1>{{event.name}}</h1>
         <p *ngIf="eventSchedule && eventSchedule.isOneDayEvent" class="subheader-date">
-            {{event.startDateString | date: 'EEEE, MMM d, y'}} ~ {{event.startDateString | date: 'shortTime'}} to {{event.endDateString | date: 'shortTime'}}
+            {{event.startDateString | date: 'EEEE, MMM d, y'}} ~ {{event.startDateString | date: 'shortTime'}} to {{event.endDateString
+            | date: 'shortTime'}}
         </p>
         <p *ngIf="eventSchedule && !eventSchedule.isOneDayEvent" class="subheader-date">
             {{event.startDateString | date: 'EEEE, MMM d, y'}} thru {{event.endDateString | date: 'EEEE, MMM d, y'}}
         </p>
     </div>
     <div *ngIf="eventSchedule">
-        <div *ngFor="let scheduleDay of eventSchedule.days">
-            <h2 *ngIf="eventSchedule.days.length > 1">{{scheduleDay.dayString}}</h2>
-        </div>
+        <ion-item *ngFor="let scheduleDay of eventSchedule.days">
+            <button ion-button small item-right (click)="openAddActivityDialog()" title="Add Activity">
+                <ion-icon name="add"></ion-icon>
+            </button>
+            <h2 *ngIf="eventSchedule.days.length > 1">
+                {{scheduleDay.dayString}}
+            </h2>
+            <p *ngIf="!scheduleDay.activities || scheduleDay.activities.length === 0">No activities yet</p>
+        </ion-item>
     </div>
     <div>
-        <button ion-button icon-left full (click)="saveAndNavToEventDetails()">
+    <button ion-button icon-left full (click)="saveAndNavToEventDetails()">
       <ion-icon name="paper"></ion-icon>
       Event Details
     </button>

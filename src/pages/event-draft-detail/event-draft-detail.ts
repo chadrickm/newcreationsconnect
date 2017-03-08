@@ -37,7 +37,7 @@ export class EventDraftDetail implements OnInit {
     this.id = this.navParams.get('id');
     this.eventService.getEvent(this.id).subscribe(e => {
       var event = this.utilityService.convertEventUtcDatesToTimezoneOffset(e);
-      return this.event = e;
+      return this.event = event;
     });
   }
 
