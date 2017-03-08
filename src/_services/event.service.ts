@@ -10,6 +10,7 @@ import { UtilityService } from '../_services/_common/utility.service';
 import { ReplaySubject } from 'rxjs';
 
 import { Event } from '../_models/Event';
+import { Activity } from '../../../_models/Activity';
 
 @Injectable()
 export class EventService {
@@ -92,5 +93,9 @@ export class EventService {
         }
 
         return validationResult;
+    }
+
+    saveActivity(eventId: number, activity: Activity) {
+
     }
 }

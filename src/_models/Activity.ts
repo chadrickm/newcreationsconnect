@@ -1,6 +1,6 @@
 export class Activity {
-    startDateTimeGmt: Date;
-    endDateTimeGmt: Date;
+    startDateTimeUtc: Date;
+    endDateTimeUtc: Date;
     type: string;
     name: string;
     speaker: string;
