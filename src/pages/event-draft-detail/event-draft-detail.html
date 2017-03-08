@@ -15,11 +15,19 @@
     </ion-item>
     <ion-item>
       <ion-label>Start Date</ion-label>
-      <ion-datetime displayFormat="MMM D, YYYY" [(ngModel)]="event.startDate"></ion-datetime>
+      <ion-datetime min="{{startYearRange}}" max="{{endYearRange}}" displayFormat="MMM D, YYYY" [(ngModel)]="event.startDateString"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Start Time</ion-label>
+      <ion-datetime displayFormat="h:mm A" [(ngModel)]="event.startDateString"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label>End Date</ion-label>
-      <ion-datetime displayFormat="MMM D, YYYY" [(ngModel)]="event.endDate"></ion-datetime>
+      <ion-datetime min="{{startYearRange}}" max="{{endYearRange}}" displayFormat="MMM D, YYYY" [(ngModel)]="event.endDateString"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>End Time</ion-label>
+      <ion-datetime displayFormat="h:mm A" [(ngModel)]="event.endDateString"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Address</ion-label>

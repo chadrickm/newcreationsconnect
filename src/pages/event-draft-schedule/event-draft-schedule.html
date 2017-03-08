@@ -10,16 +10,16 @@
 <ion-content padding>
     <div *ngIf="event">
         <h1>{{event.name}}</h1>
-        <p *ngIf="event.startDate === event.endDate" class="subheader-date">
-            {{event.startDate | date: 'EEEE, MMM d, y'}}
+        <p *ngIf="eventSchedule && eventSchedule.isOneDayEvent" class="subheader-date">
+            {{event.startDateString | date: 'EEEE, MMM d, y'}} ~ {{event.startDateString | date: 'shortTime'}} to {{event.endDateString | date: 'shortTime'}}
         </p>
-        <p *ngIf="event.startDate !== event.endDate" class="subheader-date">
-            {{event.startDate | date: 'EEEE, MMM d, y'}} to {{event.endDate | date: 'EEEE, MMM d, y'}}
+        <p *ngIf="eventSchedule && !eventSchedule.isOneDayEvent" class="subheader-date">
+            {{event.startDateString | date: 'EEEE, MMM d, y'}} thru {{event.endDateString | date: 'EEEE, MMM d, y'}}
         </p>
     </div>
     <div *ngIf="eventSchedule">
         <div *ngFor="let scheduleDay of eventSchedule.days">
-            <h2>{{scheduleDay.day | date: 'EEEE, MMM d, y'}}</h2>
+            <h2 *ngIf="eventSchedule.days.length > 1">{{scheduleDay.dayString}}</h2>
         </div>
     </div>
     <div>

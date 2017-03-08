@@ -4,6 +4,7 @@ import { NavController, NavParams, ModalController, ToastController } from 'ioni
 import { Auth, User } from '@ionic/cloud-angular';
 
 import { ValidationResult } from '../../_services/_common/validation';
+import { UtilityService } from '../../_services/_common/utility.service';
 
 import { EventService } from '../../_services/event.service';
 
@@ -28,12 +29,16 @@ export class EventDraftDetail implements OnInit {
     private navParams: NavParams,
     private toastController: ToastController,
     private user: User,
+    private utilityService: UtilityService,
     private validationResult: ValidationResult
   ) { }
 
   ngOnInit() {
     this.id = this.navParams.get('id');
-    this.eventService.getEvent(this.id).subscribe(event => this.event = event);
+    this.eventService.getEvent(this.id).subscribe(e => {
+      var event = this.utilityService.convertEventUtcDatesToTimezoneOffset(e);
+      return this.event = e;
+    });
   }
 
   saveEvent() {

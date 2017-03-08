@@ -4,6 +4,7 @@ import { NavController, NavParams, ModalController, ToastController } from 'ioni
 
 import { EventService } from '../../_services/event.service';
 import {ValidationResult} from '../../_services/_common/validation';
+import {UtilityService} from '../../_services/_common/utility.service';
 import { Event } from '../../_models/Event';
 
 import {ValidationResults} from '../../app/components/_common/validation-results/validation-results.component';
@@ -26,10 +27,12 @@ export class EventDraftSchedule {
         private modalController: ModalController,
         private navController: NavController,
         private navParams: NavParams,
-        private toastController: ToastController
+        private toastController: ToastController,
+        private utilityService: UtilityService
     ) {
         var id = this.navParams.get('id');
-        this.eventService.getEvent(id).subscribe(event => {
+        this.eventService.getEvent(id).subscribe(e => {
+            var event = this.utilityService.convertEventUtcDatesToTimezoneOffset(e);
             if (event.activities == undefined) event.activities = [];
             this.event = event
             this.eventSchedule = new EventSchedule(this.event);

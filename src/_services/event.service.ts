@@ -41,9 +41,9 @@ export class EventService {
 
         //Convert Local Date to GMT datetime before saving
         event.startDateUtc = moment(event.startDateString).utc().toDate();
-        event.startDateString = moment(event.startDateString).utc().toISOString();
+        event.startDateString = moment(event.startDateString).toISOString();
         event.endDateUtc = moment(event.endDateString).utc().toDate();
-        event.endDateString = moment(event.endDateString).utc().toISOString();
+        event.endDateString = moment(event.endDateString).toISOString();
 
         this.validateEvent(event, validationResult);
         if (!validationResult.isSuccessful()) return validationResult;
