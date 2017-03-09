@@ -117,6 +117,7 @@ export class EventService {
     }
 
     saveActivity(_eventId: string, _activity: Activity, _validationResult: ValidationResult): ValidationResult {
+        console.log('EventService.saveActivity', _activity, _validationResult);
         try {
             this.getEvent(_eventId).subscribe(event => {
 

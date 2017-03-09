@@ -1,20 +1,38 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Add/Edit Activity</ion-title>
+    </ion-navbar>
+</ion-header>
+
 <ion-content padding>
     <h1>{{eventDate}}</h1>
     <ion-item>
-      <ion-label>Start Time</ion-label>
-      <ion-datetime displayFormat="h:mm A" [(ngModel)]="activity.startDateTimeString" (ionChange)="startDateChanged()"></ion-datetime>
+        <ion-label>Start Time</ion-label>
+        <ion-datetime displayFormat="h:mm A" [(ngModel)]="activity.startDateTimeString" (ionChange)="startDateChanged()"></ion-datetime>
     </ion-item>
     <ion-item>
-      <ion-label>End Time</ion-label>
-      <ion-datetime displayFormat="h:mm A" [(ngModel)]="activity.endDateTimeString"></ion-datetime>
-    </ion-item>
-
-    <ion-item>
-      <ion-label color="primary" stacked>Activity Name</ion-label>
-      <ion-input type="text" placeholder="Name" [(ngModel)]="activity.name"></ion-input>
+        <ion-label>End Time</ion-label>
+        <ion-datetime displayFormat="h:mm A" [(ngModel)]="activity.endDateTimeString"></ion-datetime>
     </ion-item>
     <ion-item>
-      <ion-label color="primary" stacked>Speaker</ion-label>
-      <ion-input type="text" placeholder="Speaker" [(ngModel)]="activity.speaker"></ion-input>
+        <ion-label>Type</ion-label>
+        <ion-select [(ngModel)]="activity.type" (ionChange)="typeChanged()">
+            <ion-option *ngFor="let typeString of activityTypes.all" value="{{typeString}}">{{typeString}}</ion-option>
+        </ion-select>
     </ion-item>
+    <ion-item *ngIf="activity.type === activityTypes.speaker">
+        <ion-label color="primary" stacked>Speaker</ion-label>
+        <ion-input type="text" placeholder="Speaker" [(ngModel)]="activity.speaker"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label color="primary" stacked *ngIf="activity.type !== activityTypes.speaker">Activity Name</ion-label>
+        <ion-label color="primary" stacked *ngIf="activity.type === activityTypes.speaker">Title</ion-label>
+        <ion-input type="text" [placeholder]="activity.type !== activityTypes.speaker ? 'Name' : 'Title'" [(ngModel)]="activity.name"></ion-input>
+    </ion-item>
+    <p>
+      <button ion-button (click)="saveActivity()">Save</button>
+    </p>
 </ion-content>

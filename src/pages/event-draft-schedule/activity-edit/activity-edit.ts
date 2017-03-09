@@ -4,7 +4,7 @@ import * as moment from 'moment';
 
 import { ValidationResult } from '../../../_services/_common/validation';
 import { EventService } from '../../../_services/event.service';
-import { Activity } from '../../../_models/Activity';
+import { Activity, ActivityTypes } from '../../../_models/Activity';
 
 import { ValidationResults } from '../../../app/components/_common/validation-results/validation-results.component';
 
@@ -22,6 +22,7 @@ export class ActivityEdit {
     validationResult: ValidationResult;
 
     constructor(
+        public activityTypes: ActivityTypes,
         private eventService: EventService,
         private modalController: ModalController,
         private navController: NavController,
@@ -58,9 +59,19 @@ export class ActivityEdit {
     }
 
     startDateChanged() {
-        //if (this.activity.startDateTimeString === this.activity.endDateTimeString)
-        console.log(this.activity.endDateTimeString);
         this.activity.endDateTimeString = moment(this.activity.startDateTimeString).add(1, 'hour').format();
-        console.log(this.activity.endDateTimeString);
+    }
+
+    typeChanged() {
+        this.clearActivityFields();
+        if (this.activity.type === this.activityTypes.registration) {
+            this.activity.name = this.activityTypes.registration;
+        }
+    }
+
+    private clearActivityFields() {
+        this.activity.description = "";
+        this.activity.name = "";
+        this.activity.speaker = "";
     }
 }

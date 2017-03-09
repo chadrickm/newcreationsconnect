@@ -17,4 +17,6 @@ export class ActivityTypes {
     meal: string = 'Meal Time';
     registration: string = 'Registration/Check-In';
     break: string = 'Break Time'
+
+    all: string[] = [this.speaker, this.groupActivity, this.meal, this.registration, this.break];
 }

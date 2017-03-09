@@ -77,7 +77,6 @@ export class EventDraftSchedule {
     }
 
     openAddActivityDialog(date: Date) {
-        console.log(date);
         let modal = this.modalController.create(
             ActivityEdit, 
             { 
