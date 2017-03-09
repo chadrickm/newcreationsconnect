@@ -6,7 +6,7 @@ import { ValidationResult } from '../../../_services/_common/validation';
 import { EventService } from '../../../_services/event.service';
 import { Activity } from '../../../_models/Activity';
 
-import { ValidationResults } from '../../../app/components/_common/validation-results';
+import { ValidationResults } from '../../../app/components/_common/validation-results/validation-results.component';
 
 @Component({
     selector: 'activity-edit',
@@ -14,8 +14,11 @@ import { ValidationResults } from '../../../app/components/_common/validation-re
 })
 export class ActivityEdit {
 
-    eventId: number;
+    eventId: string;
+    eventDate: string;
     activity: Activity = new Activity();
+    startYearRange: number = moment().year();
+    endYearRange: number = moment().year() + 2;
     validationResult: ValidationResult;
 
     constructor(
@@ -32,19 +35,32 @@ export class ActivityEdit {
             var eventDateString = this.navParams.get('eventDate');
             var eventDate = moment(eventDateString);
             this.activity = new Activity();
-            this.activity.startDateTimeUtc = moment(eventDate.toISODateString()).toDate();
-            this.activity.endDateTimeUtc = moment(eventDate.toISODateString()).toDate();
+            var isoMoment = moment(eventDate.toISOString());
+            this.activity.startDateTimeUtc = isoMoment.toDate();
+            this.activity.startDateTimeString = isoMoment.format();
+            this.activity.endDateTimeUtc = isoMoment.toDate();
+            this.activity.endDateTimeString = isoMoment.format();
+            this.eventDate = isoMoment.format('ddd, MMMM Do');
         }
     }
 
     saveActivity() {
         var validationResult = new ValidationResult();
-        this.validationResult = this.eventService.saveActivity(this.eventId, this.activity);
+        this.validationResult = this.eventService.saveActivity(this.eventId, this.activity, validationResult);
         if (!this.validationResult.isSuccessful()) {
-        let modal = this.modalController.create(ValidationResults, {messages: this.validationResult.messages, title: 'Errors Saving Activity'});
+            let modal = this.modalController.create(
+                ValidationResults,
+                { messages: this.validationResult.messages, title: 'Errors Saving Activity' });
             modal.present();
         } else {
             this.navController.pop();
         }
+    }
+
+    startDateChanged() {
+        //if (this.activity.startDateTimeString === this.activity.endDateTimeString)
+        console.log(this.activity.endDateTimeString);
+        this.activity.endDateTimeString = moment(this.activity.startDateTimeString).add(1, 'hour').format();
+        console.log(this.activity.endDateTimeString);
     }
 }

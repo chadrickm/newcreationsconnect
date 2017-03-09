@@ -10,7 +10,7 @@ import { UtilityService } from '../_services/_common/utility.service';
 import { ReplaySubject } from 'rxjs';
 
 import { Event } from '../_models/Event';
-import { Activity } from '../../../_models/Activity';
+import { Activity } from '../_models/Activity';
 
 @Injectable()
 export class EventService {
@@ -59,7 +59,7 @@ export class EventService {
     }
 
     getEvent(eventId: string) {
-        return this.eventsDbCollection.find({id: eventId}).fetch();
+        return this.eventsDbCollection.find({ id: eventId }).fetch();
     }
 
     validateEvent(event: Event, validationResult: ValidationResult): ValidationResult {
@@ -95,7 +95,47 @@ export class EventService {
         return validationResult;
     }
 
-    saveActivity(eventId: number, activity: Activity) {
+    validateActivity(_event: Event, _activity: Activity, validationResult: ValidationResult): ValidationResult {
 
+        if (this.util.isNullOrEmpty(_activity.name)) {
+            validationResult.addMessage("Name is Required", this.messageTypes.error);
+        }
+
+        if (this.util.isNullOrEmpty(_activity.type)) {
+            validationResult.addMessage("Type is Required", this.messageTypes.error);
+        }
+
+        if (this.util.isNullOrEmpty(_activity.startDateTimeUtc)) {
+            validationResult.addMessage("Start Date is Required", this.messageTypes.error);
+        }
+
+        if (this.util.isNullOrEmpty(_activity.endDateTimeUtc)) {
+            validationResult.addMessage("End Date is Required", this.messageTypes.error);
+        }
+
+        return validationResult;
+    }
+
+    saveActivity(_eventId: string, _activity: Activity, _validationResult: ValidationResult): ValidationResult {
+        try {
+            this.getEvent(_eventId).subscribe(event => {
+
+                _validationResult = this.validateActivity(event, _activity, _validationResult);
+                if (!_validationResult.isSuccessful()) return _validationResult;
+
+                var eventToSave: Event = event;
+                eventToSave.activities.push(_activity);
+
+                _validationResult = this.validateEvent(eventToSave, _validationResult)
+                if (!_validationResult.isSuccessful()) return _validationResult;
+
+                _validationResult = this.saveEvent(eventToSave, _validationResult);
+
+                return _validationResult;
+            });
+        } catch (exception){
+            _validationResult.addMessage('There was an error saving Activity', this.messageTypes.error);
+            return _validationResult;
+        }
     }
 }

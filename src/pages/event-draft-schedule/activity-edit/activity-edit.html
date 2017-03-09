@@ -1,0 +1,20 @@
+<ion-content padding>
+    <h1>{{eventDate}}</h1>
+    <ion-item>
+      <ion-label>Start Time</ion-label>
+      <ion-datetime displayFormat="h:mm A" [(ngModel)]="activity.startDateTimeString" (ionChange)="startDateChanged()"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>End Time</ion-label>
+      <ion-datetime displayFormat="h:mm A" [(ngModel)]="activity.endDateTimeString"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary" stacked>Activity Name</ion-label>
+      <ion-input type="text" placeholder="Name" [(ngModel)]="activity.name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Speaker</ion-label>
+      <ion-input type="text" placeholder="Speaker" [(ngModel)]="activity.speaker"></ion-input>
+    </ion-item>
+</ion-content>

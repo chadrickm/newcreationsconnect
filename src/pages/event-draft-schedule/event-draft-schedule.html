@@ -20,7 +20,7 @@
     </div>
     <div *ngIf="eventSchedule">
         <ion-item *ngFor="let scheduleDay of eventSchedule.days">
-            <button ion-button small item-right (click)="openAddActivityDialog()" title="Add Activity">
+            <button ion-button small item-right (click)="openAddActivityDialog(scheduleDay.dayDate)" title="Add Activity">
                 <ion-icon name="add"></ion-icon>
             </button>
             <h2 *ngIf="eventSchedule.days.length > 1">

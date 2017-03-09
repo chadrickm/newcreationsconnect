@@ -10,7 +10,7 @@ import { ValidationResult, ValidationMessageTypes } from '../_services/_common/v
 import { EventTypes } from '../_models/Event';
 import { ActivityTypes } from '../_models/Activity';
 
-import { ValidationResults } from '../app/components/_common/validation-results/validation-results.component';
+import { ActivityEdit } from '../pages/event-draft-schedule/activity-edit/activity-edit';
 import { EventDetail } from '../pages/event-detail/event-detail';
 import { EventDraftDetail } from '../pages/event-draft-detail/event-draft-detail';
 import { EventDraftSchedule } from '../pages/event-draft-schedule/event-draft-schedule';
@@ -20,6 +20,7 @@ import { EventList } from '../pages/event-list/event-list';
 import { Home } from '../pages/home/home';
 import { Login } from '../pages/login/login';
 import { Register } from '../pages/register/register';
+import { ValidationResults } from '../app/components/_common/validation-results/validation-results.component';
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -34,6 +35,7 @@ const cloudSettings: CloudSettings = {
 
 @NgModule({
   declarations: [
+    ActivityEdit,
     EventDetail,
     EventDraftDetail,
     EventDraftSchedule,
@@ -53,6 +55,7 @@ const cloudSettings: CloudSettings = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    ActivityEdit,
     EventDetail,
     EventDraftDetail,
     EventDraftSchedule,
