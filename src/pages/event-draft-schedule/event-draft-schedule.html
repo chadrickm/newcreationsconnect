@@ -20,17 +20,28 @@
     </div>
     <div *ngIf="eventSchedule">
         <ion-item *ngFor="let scheduleDay of eventSchedule.days">
-            <button ion-button small item-right (click)="openAddActivityDialog(scheduleDay.dayDate)" title="Add Activity">
-                <ion-icon name="add"></ion-icon>
-            </button>
-            <h2 *ngIf="eventSchedule.days.length > 1">
-                {{scheduleDay.dayString}}
-            </h2>
+            <ion-item>
+                <p>
+                    {{scheduleDay.dayString}}
+                </p>
+                <button ion-button small item-right (click)="openAddActivityDialog(scheduleDay.dayDate)" title="Add Activity">
+                    <ion-icon name="add"></ion-icon>
+                </button>
+            </ion-item>
             <p *ngIf="!scheduleDay.activities || scheduleDay.activities.length === 0">No activities yet</p>
+            <p *ngIf="scheduleDay.activities && scheduleDay.activities.length > 0">
+                <ion-item *ngFor="let activity of scheduleDay.activities">
+                    {{activity.startDateString | date: 'shortTime'}} - {{activity.endDateString | date: 'shortTime'}}:
+                    <br/>{{activity.name}}
+                    <button ion-button small item-right color="light" (click)="openActivityDialog(activity, eventId)" title="Add Activity">
+                        <ion-icon name="create"></ion-icon>
+                    </button>
+                </ion-item>
+            </p>
         </ion-item>
     </div>
     <div>
-    <button ion-button icon-left full (click)="saveAndNavToEventDetails()">
+        <button ion-button icon-left full (click)="saveAndNavToEventDetails()">
       <ion-icon name="paper"></ion-icon>
       Event Details
     </button>

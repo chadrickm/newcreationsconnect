@@ -41,10 +41,6 @@
       <ion-label color="primary" stacked>State</ion-label>
       <ion-input type="text" placeholder="State" [(ngModel)]="event.state"></ion-input>
     </ion-item>
-    <p text-center>
-      <button ion-button color="light" (click)="saveEvent()">Save</button>
-      <button ion-button color="light" (click)="saveEvent()">Sumbit for Review</button>
-    </p>
   </div>
   <div>
     <button ion-button icon-left full outline>
@@ -59,5 +55,9 @@
       <ion-icon name="people"></ion-icon>
       Organizer Team
     </button>
+    <p text-center>
+      <button ion-button color="light" (click)="saveEvent()">Save</button>
+      <button ion-button color="light" (click)="saveEvent()">Sumbit for Review</button>
+    </p>
   </div>
 </ion-content>

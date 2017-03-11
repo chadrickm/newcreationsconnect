@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
 
 import { NavController, NavParams, ModalController, ToastController } from 'ionic-angular';
 import { Auth, User } from '@ionic/cloud-angular';
 
-import { ValidationResult } from '../../_services/_common/validation';
+//import { ValidationResult } from '../../_services/_common/validation';
 import { UtilityService } from '../../_services/_common/utility.service';
 
 import { EventService } from '../../_services/event.service';
@@ -29,23 +30,23 @@ export class EventDraftDetail implements OnInit {
     private navParams: NavParams,
     private toastController: ToastController,
     private user: User,
-    private utilityService: UtilityService,
-    private validationResult: ValidationResult
+    private utilityService: UtilityService
   ) { }
 
   ngOnInit() {
     this.id = this.navParams.get('id');
     this.eventService.getEvent(this.id).subscribe(e => {
-      var event = this.utilityService.convertEventUtcDatesToTimezoneOffset(e);
+      var event = e;
+      event.startDateString = moment(event.startDateUtc.toISOString()).format();
+      event.endDateString = moment(event.endDateUtc.toISOString()).format();
       return this.event = event;
     });
   }
 
   saveEvent() {
-    var validationResult = new ValidationResult();
-    this.validationResult = this.eventService.saveEvent(this.event, validationResult);
-    if (!this.validationResult.isSuccessful()) {
-      let modal = this.modalController.create(ValidationResults, {messages: this.validationResult.messages, title: 'Errors Saving Event'});
+    this.eventService.saveEvent(this.event);
+    if (!this.eventService.validationResult.isSuccessful()) {
+      let modal = this.modalController.create(ValidationResults, {messages: this.eventService.validationResult.messages, title: 'Errors Saving Event'});
       modal.present();
     } else {
       this.presentToast('Event Saved');

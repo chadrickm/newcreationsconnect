@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
+import * as moment from 'moment';
+import * as _ from 'underscore';
 
 import { NavController, NavParams, ModalController, ToastController } from 'ionic-angular';
 
 import { EventService } from '../../_services/event.service';
-import { ValidationResult } from '../../_services/_common/validation';
+//import { ValidationResult } from '../../_services/_common/validation';
 import { UtilityService } from '../../_services/_common/utility.service';
+import { Activity } from '../../_models/Activity';
 import { Event } from '../../_models/Event';
 
 import { ValidationResults } from '../../app/components/_common/validation-results/validation-results.component';
@@ -21,7 +24,6 @@ export class EventDraftSchedule {
 
     event: Event = new Event();
     eventSchedule: EventSchedule;
-    validationResult: ValidationResult;
 
     constructor(
         private eventService: EventService,
@@ -33,20 +35,29 @@ export class EventDraftSchedule {
     ) {
         var id = this.navParams.get('id');
         this.eventService.getEvent(id).subscribe(e => {
-            var event = this.utilityService.convertEventUtcDatesToTimezoneOffset(e);
-            if (event.activities == undefined) event.activities = [];
-            this.event = event
+            this.event = e;
+            this.event.startDateString = moment(this.event.startDateUtc.toISOString()).format();
+            this.event.endDateString = moment(this.event.endDateUtc.toISOString()).format();
+
+            if (this.event.activities == undefined) this.event.activities = [];
+            else {
+                _.each(this.event.activities, a => {
+                    var activity = a;
+                    activity.startDateString = moment(activity.startDateUtc.toISOString()).format();
+                    activity.endDateString = moment(activity.endDateUtc.toISOString()).format();
+                })
+            }
+            
             this.eventSchedule = new EventSchedule(this.event);
         });
     }
 
     saveEvent() {
-        var validationResult = new ValidationResult();
-        this.validationResult = this.eventService.saveEvent(this.event, validationResult);
-        if (!this.validationResult.isSuccessful()) {
+        this.eventService.saveEvent(this.event);
+        if (!this.eventService.validationResult.isSuccessful()) {
             let modal = this.modalController.create(
                 ValidationResults,
-                { messages: this.validationResult.messages, title: 'Errors Saving Event' });
+                { messages: this.eventService.validationResult.messages, title: 'Errors Saving Event' });
             modal.present();
         } else {
             this.presentToast('Event Saved');
@@ -82,7 +93,17 @@ export class EventDraftSchedule {
             { 
                 eventId: this.event.id,
                 eventDate: date.toISOString(),
-                activityId: 'new' 
+                activity: 'new'
+            });
+        modal.present();
+    }
+
+    openActivityDialog(activity: Activity, eventId: Number) {
+        let modal = this.modalController.create(
+            ActivityEdit, 
+            { 
+                eventId: eventId,
+                activity: activity
             });
         modal.present();
     }

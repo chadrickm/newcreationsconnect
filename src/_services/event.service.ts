@@ -18,6 +18,7 @@ export class EventService {
     eventsDbCollection = this.db.collection("events");
     activeEvents: ReplaySubject<Event[]> = new ReplaySubject<Event[]>();
     draftEvents: ReplaySubject<Event[]> = new ReplaySubject<Event[]>();
+    validationResult: ValidationResult = new ValidationResult();
 
     constructor(
         private db: Database,
@@ -38,7 +39,14 @@ export class EventService {
             });
     }
 
-    saveEvent(event: Event, validationResult: ValidationResult): ValidationResult {
+    saveEvent(event: Event) {
+
+        this.validationResult = new ValidationResult();
+
+        // in case this does not default to zero
+        if (event.lastActivityId = undefined) {
+            event.lastActivityId = 0;
+        }
 
         //Convert Local Date to GMT datetime before saving
         event.startDateUtc = moment(event.startDateString).utc().toDate();
@@ -46,97 +54,128 @@ export class EventService {
         event.endDateUtc = moment(event.endDateString).utc().toDate();
         event.endDateString = moment(event.endDateString).toISOString();
 
-        this.validateEvent(event, validationResult);
-        if (!validationResult.isSuccessful()) return validationResult;
+        if (event.activities) {
+            _.each(event.activities, a => {
+                var activity: Activity = a;
+                activity.startDateUtc = moment(activity.startDateString).utc().toDate();
+                activity.startDateString = moment(activity.startDateString).toISOString();
+                activity.endDateUtc = moment(activity.endDateString).utc().toDate();
+                activity.endDateString = moment(activity.endDateString).toISOString();
+            })
+        }
+
+        this.validateEvent(event);
+        if (!this.validationResult.isSuccessful()) return;
 
         try {
             this.eventsDbCollection.store(event);
         } catch (exception) {
-            validationResult.addMessage('There was an error saving event', this.messageTypes.error);
+            this.validationResult.addMessage('There was an error saving event', this.messageTypes.error);
         }
-
-        return validationResult;
     }
 
     getEvent(eventId: string) {
         return this.eventsDbCollection.find({ id: eventId }).fetch();
     }
 
-    validateEvent(event: Event, validationResult: ValidationResult): ValidationResult {
+    validateEvent(event: Event) {
+
+        if (!this.validationResult) this.validationResult = new ValidationResult();
 
         if (this.util.isNullOrEmpty(event.status)) {
-            validationResult.addMessage("Status is Required", this.messageTypes.error);
+            this.validationResult.addMessage("Status is Required", this.messageTypes.error);
         }
 
         if (this.util.isNullOrEmpty(event.name)) {
-            validationResult.addMessage("Name is Required", this.messageTypes.error);
+            this.validationResult.addMessage("Name is Required", this.messageTypes.error);
         }
 
         if (this.util.isNullOrEmpty(event.startDateString)) {
-            validationResult.addMessage("Start Date is Required", this.messageTypes.error);
+            this.validationResult.addMessage("Start Date is Required", this.messageTypes.error);
         }
 
         if (this.util.isNullOrEmpty(event.endDateString)) {
-            validationResult.addMessage("End Date is Required", this.messageTypes.error);
+            this.validationResult.addMessage("End Date is Required", this.messageTypes.error);
         }
 
         if (this.util.isNullOrEmpty(event.address)) {
-            validationResult.addMessage("Address is Required", this.messageTypes.error);
+            this.validationResult.addMessage("Address is Required", this.messageTypes.error);
         }
 
         if (this.util.isNullOrEmpty(event.city)) {
-            validationResult.addMessage("City is Required", this.messageTypes.error);
+            this.validationResult.addMessage("City is Required", this.messageTypes.error);
         }
 
         if (this.util.isNullOrEmpty(event.state)) {
-            validationResult.addMessage("State is Required", this.messageTypes.error);
+            this.validationResult.addMessage("State is Required", this.messageTypes.error);
         }
-
-        return validationResult;
     }
 
-    validateActivity(_event: Event, _activity: Activity, validationResult: ValidationResult): ValidationResult {
+    validateActivity(_event: Event, _activity: Activity) {
+
+        if (!this.validationResult) this.validationResult = new ValidationResult();
 
         if (this.util.isNullOrEmpty(_activity.name)) {
-            validationResult.addMessage("Name is Required", this.messageTypes.error);
+            this.validationResult.addMessage("Name is Required", this.messageTypes.error);
         }
 
         if (this.util.isNullOrEmpty(_activity.type)) {
-            validationResult.addMessage("Type is Required", this.messageTypes.error);
+            this.validationResult.addMessage("Type is Required", this.messageTypes.error);
         }
 
-        if (this.util.isNullOrEmpty(_activity.startDateTimeUtc)) {
-            validationResult.addMessage("Start Date is Required", this.messageTypes.error);
+        if (this.util.isNullOrEmpty(_activity.startDateUtc)) {
+            this.validationResult.addMessage("Start Date is Required", this.messageTypes.error);
         }
 
-        if (this.util.isNullOrEmpty(_activity.endDateTimeUtc)) {
-            validationResult.addMessage("End Date is Required", this.messageTypes.error);
+        if (this.util.isNullOrEmpty(_activity.endDateUtc)) {
+            this.validationResult.addMessage("End Date is Required", this.messageTypes.error);
         }
-
-        return validationResult;
     }
 
-    saveActivity(_eventId: string, _activity: Activity, _validationResult: ValidationResult): ValidationResult {
-        console.log('EventService.saveActivity', _activity, _validationResult);
+    saveActivity(_eventId: string, _activity: Activity) {
         try {
             this.getEvent(_eventId).subscribe(event => {
 
-                _validationResult = this.validateActivity(event, _activity, _validationResult);
-                if (!_validationResult.isSuccessful()) return _validationResult;
+                if (!this.validationResult) this.validationResult = new ValidationResult();
+
+                this.validateActivity(event, _activity);
+                if (!this.validationResult.isSuccessful()) return;
 
                 var eventToSave: Event = event;
-                eventToSave.activities.push(_activity);
+                
+                // if activity is a new activity
+                if (_activity.activityId === undefined) {
+                    
+                    var newActivityId = eventToSave.lastActivityId + 1;
+                    _activity.activityId = newActivityId;
+                    eventToSave.lastActivityId = newActivityId;
+                    
+                    if (!eventToSave.activities) eventToSave.activities = [];
+                    
+                    eventToSave.activities.push(_activity);
+                } else {
+                    console.log('save event');
+                    var foundActivity = _.find(eventToSave.activities, a => {
+                        var dbActivity: Activity = a;
+                        return dbActivity.activityId === _activity.activityId;
+                    });
 
-                _validationResult = this.validateEvent(eventToSave, _validationResult)
-                if (!_validationResult.isSuccessful()) return _validationResult;
+                    if (foundActivity) {
+                        var indexOfFound = _.indexOf(eventToSave.activities, foundActivity);
+                        eventToSave.activities[indexOfFound] = _activity;
+                    } else {
+                        this.validationResult.addMessage('Could not find Activity: ' + _activity.activityId, this.messageTypes.error);
+                        return;
+                    }
+                }
 
-                _validationResult = this.saveEvent(eventToSave, _validationResult);
+                this.validateEvent(eventToSave)
+                if (!this.validationResult.isSuccessful()) return;
 
-                return _validationResult;
+                this.saveEvent(eventToSave);
             });
         } catch (exception){
-            _validationResult.addMessage('There was an error saving Activity', this.messageTypes.error);
-            return _validationResult;
+            this.validationResult.addMessage('There was an error saving Activity', this.messageTypes.error);
         }
     }
 }

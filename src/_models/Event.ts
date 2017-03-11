@@ -19,6 +19,7 @@ export class Event {
     createdByUsername: string;
     createdByDisplayName: string;
     timezoneOffset: number;
+    lastActivityId: number;
 
     activities: Activity[];
 }

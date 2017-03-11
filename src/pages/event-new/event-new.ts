@@ -38,8 +38,8 @@ export class EventNew implements OnInit {
     if (this.id === 'new') {
       this.newEvent = new Event();
       this.newEvent.status = 'Draft';
-      this.newEvent.startDateString = moment().format();
-      this.newEvent.endDateString = moment().format();
+      this.newEvent.startDateString = moment(new Date().toISOString()).add(1, 'day').add(1, 'hour').startOf('day').format();
+      this.newEvent.endDateString = moment(new Date().toISOString()).add(1, 'day').add(1, 'hour').startOf('day').format();
       this.newEvent.timezoneOffset = ((moment().toDate().getTimezoneOffset() / 60) * -1);
       
       if (this.auth.isAuthenticated()) {
@@ -56,9 +56,10 @@ export class EventNew implements OnInit {
 
   saveEvent() {
     var validationResult = new ValidationResult();
-    this.validationResult = this.eventService.saveEvent(this.newEvent, validationResult);
-    if (!this.validationResult.isSuccessful()) {
-      let modal = this.modalController.create(ValidationResults, {messages: this.validationResult.messages, title: 'Errors Saving Event'});
+    this.eventService.saveEvent(this.newEvent);
+    console.log(this.eventService.validationResult);
+    if (!this.eventService.validationResult.isSuccessful()) {
+      let modal = this.modalController.create(ValidationResults, {messages: this.eventService.validationResult.messages, title: 'Errors Saving Event'});
       modal.present();
     } else {
       this.navController.pop();
