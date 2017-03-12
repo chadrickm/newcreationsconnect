@@ -44,7 +44,7 @@ export class EventService {
         this.validationResult = new ValidationResult();
 
         // in case this does not default to zero
-        if (event.lastActivityId = undefined) {
+        if (this.util.isNullOrEmpty(event.lastActivityId)) {
             event.lastActivityId = 0;
         }
 
