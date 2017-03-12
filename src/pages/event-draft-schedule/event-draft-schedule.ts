@@ -50,6 +50,10 @@ export class EventDraftSchedule {
 
             this.eventSchedule = new EventSchedule(this.event);
         });
+        this.eventService.addedActivity$.subscribe(a => {
+            this.event.activities.push(a);
+            this.eventSchedule = new EventSchedule(this.event);
+        });
     }
 
     saveEvent() {

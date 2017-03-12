@@ -3,7 +3,7 @@ import * as _ from 'underscore';
 import * as moment from 'moment';
 
 import { Database } from '@ionic/cloud-angular';
-//import { Observable } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 
 import { ValidationResult, ValidationMessageTypes } from '../_services/_common/validation';
 import { UtilityService } from '../_services/_common/utility.service';
@@ -19,6 +19,9 @@ export class EventService {
     activeEvents: ReplaySubject<Event[]> = new ReplaySubject<Event[]>();
     draftEvents: ReplaySubject<Event[]> = new ReplaySubject<Event[]>();
     validationResult: ValidationResult = new ValidationResult();
+    addedActivity: Activity;
+    private activityAddedSubject: Subject<Activity> = new Subject<Activity>();
+    addedActivity$ = this.activityAddedSubject.asObservable();
 
     constructor(
         private db: Database,
@@ -118,37 +121,10 @@ export class EventService {
         callback();
     }
 
-    validateActivity(_event: Event, _activity: Activity, callback: any) {
-
-        if (!this.validationResult) this.validationResult = new ValidationResult();
-
-        console.log('validateActivity', _activity);
-
-        if (this.util.isNullOrEmpty(_activity.name)) {
-            this.validationResult.addMessage("Name is Required", this.messageTypes.error);
-        }
-
-        if (this.util.isNullOrEmpty(_activity.type)) {
-            this.validationResult.addMessage("Type is Required", this.messageTypes.error);
-        }
-
-        if (this.util.isNullOrEmpty(_activity.startDateString)) {
-            this.validationResult.addMessage("Start Date is Required", this.messageTypes.error);
-        }
-
-        if (this.util.isNullOrEmpty(_activity.endDateString)) {
-            this.validationResult.addMessage("End Date is Required", this.messageTypes.error);
-        }
-
-        callback();
-    }
-
     saveActivity(_eventId: string, _activity: Activity, callback: any) {
         try {
             this.getEvent(_eventId).subscribe(event => {
-
                 if (!this.validationResult) this.validationResult = new ValidationResult();
-
                 this.validateActivity(event, _activity, () => {
                     if (!this.validationResult.isSuccessful()) callback()
                     else {
@@ -163,6 +139,7 @@ export class EventService {
                             if (!eventToSave.activities) eventToSave.activities = [];
 
                             eventToSave.activities.push(_activity);
+                            this.addedActivity = _activity;
                         } else {
                             var foundActivity = _.find(eventToSave.activities, a => {
                                 var dbActivity: Activity = a;
@@ -182,6 +159,9 @@ export class EventService {
                             if (!this.validationResult.isSuccessful()) callback()
                             else {
                                 this.saveEvent(eventToSave, callback);
+                                if (this.addedActivity) {
+                                    this.activityAddedSubject.next(this.addedActivity);
+                                }
                             }
                         })
 
@@ -192,5 +172,28 @@ export class EventService {
             this.validationResult.addMessage('There was an error saving Activity', this.messageTypes.error);
             callback();
         }
+    }
+
+    validateActivity(_event: Event, _activity: Activity, callback: any) {
+
+        if (!this.validationResult) this.validationResult = new ValidationResult();
+
+        if (this.util.isNullOrEmpty(_activity.name)) {
+            this.validationResult.addMessage("Name is Required", this.messageTypes.error);
+        }
+
+        if (this.util.isNullOrEmpty(_activity.type)) {
+            this.validationResult.addMessage("Type is Required", this.messageTypes.error);
+        }
+
+        if (this.util.isNullOrEmpty(_activity.startDateString)) {
+            this.validationResult.addMessage("Start Date is Required", this.messageTypes.error);
+        }
+
+        if (this.util.isNullOrEmpty(_activity.endDateString)) {
+            this.validationResult.addMessage("End Date is Required", this.messageTypes.error);
+        }
+
+        callback();
     }
 }
