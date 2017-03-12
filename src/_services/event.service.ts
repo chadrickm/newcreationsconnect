@@ -20,7 +20,9 @@ export class EventService {
     draftEvents: ReplaySubject<Event[]> = new ReplaySubject<Event[]>();
     validationResult: ValidationResult = new ValidationResult();
     addedActivity: Activity;
-    private activityAddedSubject: Subject<Activity> = new Subject<Activity>();
+
+    // used in event-draft-schedule to update the activity list
+    activityAddedSubject: Subject<Activity> = new Subject<Activity>();
     addedActivity$ = this.activityAddedSubject.asObservable();
 
     constructor(
