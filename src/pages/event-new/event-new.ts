@@ -20,13 +20,13 @@ export class EventNew implements OnInit {
   id: string;
   newEvent: Event;
   startYearRange: number = moment().year();
-  endYearRange: number = moment().year() +2;
+  endYearRange: number = moment().year() + 2;
 
   constructor(
     public auth: Auth,
     private eventService: EventService,
     private modalController: ModalController,
-    public navController: NavController, 
+    public navController: NavController,
     private navParams: NavParams,
     private user: User,
     private validationResult: ValidationResult
@@ -41,7 +41,7 @@ export class EventNew implements OnInit {
       this.newEvent.startDateString = moment(new Date().toISOString()).add(1, 'day').add(1, 'hour').startOf('day').format();
       this.newEvent.endDateString = moment(new Date().toISOString()).add(1, 'day').add(1, 'hour').startOf('day').format();
       this.newEvent.timezoneOffset = ((moment().toDate().getTimezoneOffset() / 60) * -1);
-      
+
       if (this.auth.isAuthenticated()) {
         this.newEvent.createdByUsername = this.user.details.username;
         this.newEvent.createdByDisplayName = this.user.details.name;
@@ -56,13 +56,15 @@ export class EventNew implements OnInit {
 
   saveEvent() {
     var validationResult = new ValidationResult();
-    this.eventService.saveEvent(this.newEvent);
-    console.log(this.eventService.validationResult);
-    if (!this.eventService.validationResult.isSuccessful()) {
-      let modal = this.modalController.create(ValidationResults, {messages: this.eventService.validationResult.messages, title: 'Errors Saving Event'});
-      modal.present();
-    } else {
-      this.navController.pop();
-    }
+    this.eventService.saveEvent(this.newEvent, () => {
+      if (!this.eventService.validationResult.isSuccessful()) {
+        let modal = this.modalController.create(
+          ValidationResults, 
+          { messages: this.eventService.validationResult.messages, title: 'Errors Saving Event' });
+        modal.present();
+      } else {
+        this.navController.pop();
+      }
+    });
   }
 }

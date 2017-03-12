@@ -47,21 +47,22 @@ export class EventDraftSchedule {
                     activity.endDateString = moment(activity.endDateUtc.toISOString()).format();
                 })
             }
-            
+
             this.eventSchedule = new EventSchedule(this.event);
         });
     }
 
     saveEvent() {
-        this.eventService.saveEvent(this.event);
-        if (!this.eventService.validationResult.isSuccessful()) {
-            let modal = this.modalController.create(
-                ValidationResults,
-                { messages: this.eventService.validationResult.messages, title: 'Errors Saving Event' });
-            modal.present();
-        } else {
-            this.presentToast('Event Saved');
-        }
+        this.eventService.saveEvent(this.event, () => {
+            if (!this.eventService.validationResult.isSuccessful()) {
+                let modal = this.modalController.create(
+                    ValidationResults,
+                    { messages: this.eventService.validationResult.messages, title: 'Errors Saving Event' });
+                modal.present();
+            } else {
+                this.presentToast('Event Saved');
+            }
+        });
     }
 
     saveAndNavToEventDetails() {
@@ -89,8 +90,8 @@ export class EventDraftSchedule {
 
     openAddActivityDialog(date: Date) {
         let modal = this.modalController.create(
-            ActivityEdit, 
-            { 
+            ActivityEdit,
+            {
                 eventId: this.event.id,
                 eventDate: date.toISOString(),
                 activity: 'new'
@@ -100,8 +101,8 @@ export class EventDraftSchedule {
 
     openActivityDialog(activity: Activity, eventId: Number) {
         let modal = this.modalController.create(
-            ActivityEdit, 
-            { 
+            ActivityEdit,
+            {
                 eventId: eventId,
                 activity: activity
             });

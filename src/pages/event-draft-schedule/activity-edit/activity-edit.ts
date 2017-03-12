@@ -46,15 +46,16 @@ export class ActivityEdit {
     }
 
     saveActivity() {
-        this.eventService.saveActivity(this.eventId, this.activity);
-        if (!this.eventService.validationResult.isSuccessful()) {
-            let modal = this.modalController.create(
-                ValidationResults,
-                { messages: this.eventService.validationResult.messages, title: 'Errors Saving Activity' });
-            modal.present();
-        } else {
-            this.navController.pop();
-        }
+        this.eventService.saveActivity(this.eventId, this.activity, () => {
+            if (!this.eventService.validationResult.isSuccessful()) {
+                let modal = this.modalController.create(
+                    ValidationResults,
+                    { messages: this.eventService.validationResult.messages, title: 'Error(s) Saving Activity' });
+                modal.present();
+            } else {
+                this.navController.pop();
+            }
+        });
     }
 
     startDateChanged() {

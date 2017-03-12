@@ -11,7 +11,7 @@ import { EventService } from '../../_services/event.service';
 
 import { Event } from '../../_models/Event';
 import { ValidationResults } from '../../app/components/_common/validation-results/validation-results.component';
-import {EventDraftSchedule} from '../event-draft-schedule/event-draft-schedule';
+import { EventDraftSchedule } from '../event-draft-schedule/event-draft-schedule';
 
 @Component({
   selector: 'event-draft-detail',
@@ -26,7 +26,7 @@ export class EventDraftDetail implements OnInit {
     public auth: Auth,
     private eventService: EventService,
     private modalController: ModalController,
-    public navController: NavController, 
+    public navController: NavController,
     private navParams: NavParams,
     private toastController: ToastController,
     private user: User,
@@ -44,21 +44,22 @@ export class EventDraftDetail implements OnInit {
   }
 
   saveEvent() {
-    this.eventService.saveEvent(this.event);
-    if (!this.eventService.validationResult.isSuccessful()) {
-      let modal = this.modalController.create(ValidationResults, {messages: this.eventService.validationResult.messages, title: 'Errors Saving Event'});
-      modal.present();
-    } else {
-      this.presentToast('Event Saved');
-    }
+    this.eventService.saveEvent(this.event, () => {
+      if (!this.eventService.validationResult.isSuccessful()) {
+        let modal = this.modalController.create(ValidationResults, { messages: this.eventService.validationResult.messages, title: 'Errors Saving Event' });
+        modal.present();
+      } else {
+        this.presentToast('Event Saved');
+      }
+    });
   }
 
   saveAndNavToEventSchedule() {
     this.saveEvent();
-    this.navController.push(EventDraftSchedule, {id: this.event.id})
+    this.navController.push(EventDraftSchedule, { id: this.event.id })
       .then(() => {
         const index = this.navController.getActive().index;
-        this.navController.remove(index-1);
+        this.navController.remove(index - 1);
       });
   }
 

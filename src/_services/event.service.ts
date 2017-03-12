@@ -39,7 +39,7 @@ export class EventService {
             });
     }
 
-    saveEvent(event: Event) {
+    saveEvent(event: Event, callback: any) {
 
         this.validationResult = new ValidationResult();
 
@@ -64,21 +64,26 @@ export class EventService {
             })
         }
 
-        this.validateEvent(event);
-        if (!this.validationResult.isSuccessful()) return;
+        this.validateEvent(event, () => {
+            if (!this.validationResult.isSuccessful()) callback()
+            else {
+                try {
+                    this.eventsDbCollection.store(event);
+                    callback();
+                } catch (exception) {
+                    this.validationResult.addMessage('There was an error saving event', this.messageTypes.error);
+                    callback();
+                }
+            }
+        });
 
-        try {
-            this.eventsDbCollection.store(event);
-        } catch (exception) {
-            this.validationResult.addMessage('There was an error saving event', this.messageTypes.error);
-        }
     }
 
     getEvent(eventId: string) {
         return this.eventsDbCollection.find({ id: eventId }).fetch();
     }
 
-    validateEvent(event: Event) {
+    validateEvent(event: Event, callback: any) {
 
         if (!this.validationResult) this.validationResult = new ValidationResult();
 
@@ -109,11 +114,15 @@ export class EventService {
         if (this.util.isNullOrEmpty(event.state)) {
             this.validationResult.addMessage("State is Required", this.messageTypes.error);
         }
+
+        callback();
     }
 
-    validateActivity(_event: Event, _activity: Activity) {
+    validateActivity(_event: Event, _activity: Activity, callback: any) {
 
         if (!this.validationResult) this.validationResult = new ValidationResult();
+
+        console.log('validateActivity', _activity);
 
         if (this.util.isNullOrEmpty(_activity.name)) {
             this.validationResult.addMessage("Name is Required", this.messageTypes.error);
@@ -123,59 +132,65 @@ export class EventService {
             this.validationResult.addMessage("Type is Required", this.messageTypes.error);
         }
 
-        if (this.util.isNullOrEmpty(_activity.startDateUtc)) {
+        if (this.util.isNullOrEmpty(_activity.startDateString)) {
             this.validationResult.addMessage("Start Date is Required", this.messageTypes.error);
         }
 
-        if (this.util.isNullOrEmpty(_activity.endDateUtc)) {
+        if (this.util.isNullOrEmpty(_activity.endDateString)) {
             this.validationResult.addMessage("End Date is Required", this.messageTypes.error);
         }
+
+        callback();
     }
 
-    saveActivity(_eventId: string, _activity: Activity) {
+    saveActivity(_eventId: string, _activity: Activity, callback: any) {
         try {
             this.getEvent(_eventId).subscribe(event => {
 
                 if (!this.validationResult) this.validationResult = new ValidationResult();
 
-                this.validateActivity(event, _activity);
-                if (!this.validationResult.isSuccessful()) return;
+                this.validateActivity(event, _activity, () => {
+                    if (!this.validationResult.isSuccessful()) callback()
+                    else {
+                        var eventToSave: Event = event;
 
-                var eventToSave: Event = event;
-                
-                // if activity is a new activity
-                if (_activity.activityId === undefined) {
-                    
-                    var newActivityId = eventToSave.lastActivityId + 1;
-                    _activity.activityId = newActivityId;
-                    eventToSave.lastActivityId = newActivityId;
-                    
-                    if (!eventToSave.activities) eventToSave.activities = [];
-                    
-                    eventToSave.activities.push(_activity);
-                } else {
-                    console.log('save event');
-                    var foundActivity = _.find(eventToSave.activities, a => {
-                        var dbActivity: Activity = a;
-                        return dbActivity.activityId === _activity.activityId;
-                    });
+                        // if activity is a new activity
+                        if (this.util.isNullOrEmpty(_activity.activityId)) {
+                            var newActivityId = eventToSave.lastActivityId + 1;
+                            _activity.activityId = newActivityId;
+                            eventToSave.lastActivityId = newActivityId;
 
-                    if (foundActivity) {
-                        var indexOfFound = _.indexOf(eventToSave.activities, foundActivity);
-                        eventToSave.activities[indexOfFound] = _activity;
-                    } else {
-                        this.validationResult.addMessage('Could not find Activity: ' + _activity.activityId, this.messageTypes.error);
-                        return;
+                            if (!eventToSave.activities) eventToSave.activities = [];
+
+                            eventToSave.activities.push(_activity);
+                        } else {
+                            var foundActivity = _.find(eventToSave.activities, a => {
+                                var dbActivity: Activity = a;
+                                return dbActivity.activityId === _activity.activityId;
+                            });
+
+                            if (foundActivity) {
+                                var indexOfFound = _.indexOf(eventToSave.activities, foundActivity);
+                                eventToSave.activities[indexOfFound] = _activity;
+                            } else {
+                                this.validationResult.addMessage('Could not find Activity: ' + _activity.activityId, this.messageTypes.error);
+                                callback();
+                            }
+                        }
+
+                        this.validateEvent(eventToSave, () => {
+                            if (!this.validationResult.isSuccessful()) callback()
+                            else {
+                                this.saveEvent(eventToSave, callback);
+                            }
+                        })
+
                     }
-                }
-
-                this.validateEvent(eventToSave)
-                if (!this.validationResult.isSuccessful()) return;
-
-                this.saveEvent(eventToSave);
+                });
             });
-        } catch (exception){
+        } catch (exception) {
             this.validationResult.addMessage('There was an error saving Activity', this.messageTypes.error);
+            callback();
         }
     }
 }
