@@ -11,6 +11,7 @@ import { EventTypes } from '../_models/Event';
 import { ActivityTypes } from '../_models/Activity';
 
 import { ActivityEdit } from '../pages/event-draft/event-draft-schedule/activity-edit/activity-edit';
+import { DraftNav } from '../pages/event-draft/_draft-nav/draft-nav';
 import { EventDetail } from '../pages/event-detail/event-detail';
 import { EventDraftDetail } from '../pages/event-draft/event-draft-detail/event-draft-detail';
 import { EventDraftSchedule } from '../pages/event-draft/event-draft-schedule/event-draft-schedule';
@@ -36,6 +37,7 @@ const cloudSettings: CloudSettings = {
 @NgModule({
   declarations: [
     ActivityEdit,
+    DraftNav,
     EventDetail,
     EventDraftDetail,
     EventDraftSchedule,
@@ -56,6 +58,7 @@ const cloudSettings: CloudSettings = {
   entryComponents: [
     MyApp,
     ActivityEdit,
+    DraftNav,
     EventDetail,
     EventDraftDetail,
     EventDraftSchedule,
