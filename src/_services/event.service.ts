@@ -143,6 +143,7 @@ export class EventService {
                             eventToSave.activities.push(_activity);
                             this.addedActivity = _activity;
                         } else {
+                            console.log(eventToSave.activities);
                             var foundActivity = _.find(eventToSave.activities, a => {
                                 var dbActivity: Activity = a;
                                 return dbActivity.activityId === _activity.activityId;

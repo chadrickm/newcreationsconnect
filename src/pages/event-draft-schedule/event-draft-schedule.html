@@ -33,7 +33,7 @@
                 <ion-item *ngFor="let activity of scheduleDay.activities">
                     {{activity.startDateString | date: 'shortTime'}} - {{activity.endDateString | date: 'shortTime'}}:
                     <br/>{{activity.name}}
-                    <button ion-button small item-right color="light" (click)="openActivityDialog(activity, eventId)" title="Add Activity">
+                    <button ion-button small item-right color="light" (click)="openActivityDialog(activity, event.id)" title="Add Activity">
                         <ion-icon name="create"></ion-icon>
                     </button>
                 </ion-item>
