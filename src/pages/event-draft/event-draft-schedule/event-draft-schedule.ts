@@ -4,17 +4,17 @@ import * as _ from 'underscore';
 
 import { NavController, NavParams, ModalController, ToastController } from 'ionic-angular';
 
-import { EventService } from '../../_services/event.service';
+import { EventService } from '../../../_services/event.service';
 //import { ValidationResult } from '../../_services/_common/validation';
-import { UtilityService } from '../../_services/_common/utility.service';
-import { Activity } from '../../_models/Activity';
-import { Event } from '../../_models/Event';
+import { UtilityService } from '../../../_services/_common/utility.service';
+import { Activity } from '../../../_models/Activity';
+import { Event } from '../../../_models/Event';
 
-import { ValidationResults } from '../../app/components/_common/validation-results/validation-results.component';
+import { ValidationResults } from '../../../app/components/_common/validation-results/validation-results.component';
 import { ActivityEdit } from './activity-edit/activity-edit';
 import { EventDraftDetail } from '../event-draft-detail/event-draft-detail';
 
-import { EventSchedule } from '../../_models/_view-models/EventSchedule';
+import { EventSchedule } from '../../../_models/_view-models/EventSchedule';
 
 @Component({
     selector: 'event-draft-schedule',

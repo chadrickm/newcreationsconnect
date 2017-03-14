@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 
-import { EventService } from '../../_services/event.service';
+import { EventService } from '../../../_services/event.service';
 
-import { Event } from '../../_models/Event';
+import { Event } from '../../../_models/Event';
 
 import { EventDraftDetail } from '../event-draft-detail/event-draft-detail';
 

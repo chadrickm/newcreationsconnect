@@ -3,10 +3,10 @@ import { ModalController, NavController, NavParams, ViewController } from 'ionic
 import * as moment from 'moment';
 
 //import { ValidationResult } from '../../../_services/_common/validation';
-import { EventService } from '../../../_services/event.service';
-import { Activity, ActivityTypes } from '../../../_models/Activity';
+import { EventService } from '../../../../_services/event.service';
+import { Activity, ActivityTypes } from '../../../../_models/Activity';
 
-import { ValidationResults } from '../../../app/components/_common/validation-results/validation-results.component';
+import { ValidationResults } from '../../../../app/components/_common/validation-results/validation-results.component';
 
 @Component({
     selector: 'activity-edit',
@@ -59,7 +59,6 @@ export class ActivityEdit {
     }
 
     startDateChanged() {
-        var mStartDateTimeString = moment(this.activity.startDateString);
         var mEndDateTimeString = moment(this.activity.startDateString).add(1, 'hour');
         this.activity.endDateString = mEndDateTimeString.format();
     }

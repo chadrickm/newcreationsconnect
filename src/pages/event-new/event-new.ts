@@ -3,7 +3,7 @@ import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { Auth, User } from '@ionic/cloud-angular';
 import * as moment from 'moment';
 
-import { ValidationResult } from '../../_services/_common/validation';
+//import { ValidationResult } from '../../_services/_common/validation';
 
 import { EventService } from '../../_services/event.service';
 
@@ -28,8 +28,7 @@ export class EventNew implements OnInit {
     private modalController: ModalController,
     public navController: NavController,
     private navParams: NavParams,
-    private user: User,
-    private validationResult: ValidationResult
+    private user: User
   ) { }
 
   ngOnInit() {
@@ -55,7 +54,6 @@ export class EventNew implements OnInit {
   }
 
   saveEvent() {
-    var validationResult = new ValidationResult();
     this.eventService.saveEvent(this.newEvent, () => {
       if (!this.eventService.validationResult.isSuccessful()) {
         let modal = this.modalController.create(

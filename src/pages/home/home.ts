@@ -7,7 +7,7 @@ import * as _ from 'underscore';
 import { EventService } from '../../_services/event.service';
 
 import { EventList } from '../event-list/event-list';
-import { EventDraftList } from '../event-draft-list/event-draft-list';
+import { EventDraftList } from '../event-draft/event-draft-list/event-draft-list';
 import { EventNew } from '../event-new/event-new';
 
 @Component({

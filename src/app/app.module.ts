@@ -10,11 +10,11 @@ import { ValidationResult, ValidationMessageTypes } from '../_services/_common/v
 import { EventTypes } from '../_models/Event';
 import { ActivityTypes } from '../_models/Activity';
 
-import { ActivityEdit } from '../pages/event-draft-schedule/activity-edit/activity-edit';
+import { ActivityEdit } from '../pages/event-draft/event-draft-schedule/activity-edit/activity-edit';
 import { EventDetail } from '../pages/event-detail/event-detail';
-import { EventDraftDetail } from '../pages/event-draft-detail/event-draft-detail';
-import { EventDraftSchedule } from '../pages/event-draft-schedule/event-draft-schedule';
-import { EventDraftList } from '../pages/event-draft-list/event-draft-list';
+import { EventDraftDetail } from '../pages/event-draft/event-draft-detail/event-draft-detail';
+import { EventDraftSchedule } from '../pages/event-draft/event-draft-schedule/event-draft-schedule';
+import { EventDraftList } from '../pages/event-draft/event-draft-list/event-draft-list';
 import { EventNew } from '../pages/event-new/event-new';
 import { EventList } from '../pages/event-list/event-list';
 import { Home } from '../pages/home/home';

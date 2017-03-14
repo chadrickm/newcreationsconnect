@@ -5,12 +5,12 @@ import { NavController, NavParams, ModalController, ToastController } from 'ioni
 import { Auth, User } from '@ionic/cloud-angular';
 
 //import { ValidationResult } from '../../_services/_common/validation';
-import { UtilityService } from '../../_services/_common/utility.service';
+import { UtilityService } from '../../../_services/_common/utility.service';
 
-import { EventService } from '../../_services/event.service';
+import { EventService } from '../../../_services/event.service';
 
-import { Event } from '../../_models/Event';
-import { ValidationResults } from '../../app/components/_common/validation-results/validation-results.component';
+import { Event } from '../../../_models/Event';
+import { ValidationResults } from '../../../app/components/_common/validation-results/validation-results.component';
 import { EventDraftSchedule } from '../event-draft-schedule/event-draft-schedule';
 
 @Component({
