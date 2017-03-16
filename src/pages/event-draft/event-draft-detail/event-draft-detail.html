@@ -42,23 +42,5 @@
       <ion-input type="text" placeholder="State" [(ngModel)]="event.state"></ion-input>
     </ion-item>
   </div>
-  <div>
-    <button ion-button icon-left full outline>
-      <ion-icon name="paper"></ion-icon>
-      Event Details
-    </button>
-    <button ion-button icon-left full (click)="saveAndNavToEventSchedule()">
-      <ion-icon name="calendar"></ion-icon>
-      Schedule / Speakers
-    </button>
-    <button ion-button icon-left full (click)="saveAndNavToEventTeam()">
-      <ion-icon name="people"></ion-icon>
-      Organizing Team
-    </button>
-    <p text-center>
-      <button ion-button color="light" (click)="saveEvent()">Save</button>
-      <button ion-button color="light" (click)="saveEvent()">Sumbit for Review</button>
-    </p>
-  </div>
-  <draft-nav (event)="event"></draft-nav>
+  <draft-nav [event]="event" [activePage]="'detail'"></draft-nav>
 </ion-content>

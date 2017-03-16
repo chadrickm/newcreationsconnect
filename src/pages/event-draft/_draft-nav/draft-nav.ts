@@ -6,6 +6,7 @@ import { EventService } from '../../../_services/event.service';
 import { Event } from '../../../_models/Event';
 import { ValidationResults } from '../../../app/components/_common/validation-results/validation-results.component';
 import { EventDraftSchedule } from '../event-draft-schedule/event-draft-schedule';
+import { EventDraftDetail } from '../event-draft-detail/event-draft-detail';
 
 @Component({
     selector: 'draft-nav',
@@ -15,6 +16,8 @@ export class DraftNav {
 
     @Input()
     event: Event;
+    @Input()
+    activePage: string;
 
     constructor(
         private eventService: EventService,
@@ -22,7 +25,15 @@ export class DraftNav {
         public navController: NavController,
         private toastController: ToastController,
     ) {
-        console.log(this.event);
+    }
+
+    saveAndNavToEventDetail() {
+        this.saveEvent();
+        this.navController.push(EventDraftDetail, { id: this.event.id })
+            .then(() => {
+                const index = this.navController.getActive().index;
+                this.navController.remove(index - 1);
+            });
     }
 
     saveAndNavToEventSchedule() {

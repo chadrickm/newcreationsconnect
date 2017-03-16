@@ -1,14 +1,14 @@
 <!--<ion-content>-->
     <div>
-        <button ion-button icon-left full outline>
+        <button ion-button icon-left full [outline]="activePage === 'detail'" (click)="saveAndNavToEventDetail()">
             <ion-icon name="paper"></ion-icon>
             Event Details
         </button>
-        <button ion-button icon-left full (click)="saveAndNavToEventSchedule()">
+        <button ion-button icon-left full [outline]="activePage === 'schedule'" (click)="saveAndNavToEventSchedule()">
             <ion-icon name="calendar"></ion-icon>
             Schedule / Speakers
         </button>
-        <button ion-button icon-left full (click)="saveAndNavToEventTeam()">
+        <button ion-button icon-left full [outline]="activePage === 'team'" (click)="saveAndNavToEventTeam()">
             <ion-icon name="people"></ion-icon>
             Organizing Team
         </button>
