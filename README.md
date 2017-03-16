@@ -1,6 +1,6 @@
 # New Creations Connect
 
-## Installation
+## Running Locally
 
 Use local npm packages
 
