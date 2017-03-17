@@ -20,10 +20,15 @@ export class EventService {
     draftEvents: ReplaySubject<Event[]> = new ReplaySubject<Event[]>();
     validationResult: ValidationResult = new ValidationResult();
     addedActivity: Activity;
+    activityUpdated: boolean = false;
 
     // used in event-draft-schedule to update the activity list
     activityAddedSubject: Subject<Activity> = new Subject<Activity>();
-    addedActivity$ = this.activityAddedSubject.asObservable();
+    activityAdded$ = this.activityAddedSubject.asObservable();
+
+    activityModifiedSubject: Subject<any> = new Subject<any>();
+    activityModified$ = this.activityModifiedSubject.asObservable();
+
 
     constructor(
         private db: Database,
@@ -128,7 +133,7 @@ export class EventService {
             this.getEvent(_eventId).subscribe(event => {
                 if (!this.validationResult) this.validationResult = new ValidationResult();
                 this.validateActivity(event, _activity, () => {
-                    if (!this.validationResult.isSuccessful()) callback()
+                    if (!this.validationResult.isSuccessful()) callback();
                     else {
                         var eventToSave: Event = event;
 
@@ -151,6 +156,7 @@ export class EventService {
                             if (foundActivity) {
                                 var indexOfFound = _.indexOf(eventToSave.activities, foundActivity);
                                 eventToSave.activities[indexOfFound] = _activity;
+                                this.activityUpdated = true;
                             } else {
                                 this.validationResult.addMessage('Could not find Activity: ' + _activity.activityId, this.messageTypes.error);
                                 callback();
@@ -163,6 +169,9 @@ export class EventService {
                                 this.saveEvent(eventToSave, callback);
                                 if (this.addedActivity) {
                                     this.activityAddedSubject.next(this.addedActivity);
+                                }
+                                if (this.activityUpdated){
+                                    this.activityModifiedSubject.next();
                                 }
                             }
                         })

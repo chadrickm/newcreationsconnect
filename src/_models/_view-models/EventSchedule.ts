@@ -14,16 +14,16 @@ export class EventSchedule {
 
         var dateToken: Date = moment(event.startDateUtc.toISOString()).startOf('day').toDate();
         var endDateToken = moment(event.endDateUtc.toISOString()).toDate();
-        while(dateToken <= endDateToken) {
-            
+        while (dateToken <= endDateToken) {
+
             var newDay = new EventScheduleDay();
 
             newDay.dayString = moment(dateToken.toISOString()).format('ddd, MMMM Do');
             newDay.dayDate = dateToken;
-            
+
             var startOfDay = moment(dateToken).startOf('day');
             var endOfDay = moment(dateToken.toISOString()).endOf('day');
-            
+
             newDay.activities = _.filter(event.activities, a => {
                 var activity: Activity = a;
                 var mActivityStartDate = moment(activity.startDateString);
@@ -33,9 +33,16 @@ export class EventSchedule {
                     return activity;
                 }
             });
-            
+
+            newDay.activities = _.sortBy(newDay.activities, a => {
+                var activity: Activity = a;
+                var dateTime: Date = activity.startDateUtc;
+                return dateTime;
+            });
+            console.log('activities ordered');
+
             this.days.push(newDay);
-            
+
             dateToken = moment(dateToken.toISOString()).add(1, 'day').toDate();
         }
 

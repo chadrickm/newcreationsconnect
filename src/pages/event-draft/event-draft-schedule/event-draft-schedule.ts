@@ -21,7 +21,7 @@ import { EventSchedule } from '../../../_models/_view-models/EventSchedule';
     templateUrl: 'event-draft-schedule.html'
 })
 export class EventDraftSchedule {
-
+    eventId: string;
     event: Event = new Event();
     eventSchedule: EventSchedule;
 
@@ -33,8 +33,19 @@ export class EventDraftSchedule {
         private toastController: ToastController,
         private utilityService: UtilityService
     ) {
-        var id = this.navParams.get('id');
-        this.eventService.getEvent(id).subscribe(e => {
+        this.eventId = this.navParams.get('id');
+        this.updateEventFromDb();
+        this.eventService.activityAdded$.subscribe(a => {
+            this.updateEventFromDb();
+        });
+        this.eventService.activityModified$.subscribe(() => {
+            this.updateEventFromDb();
+        });
+    }
+
+    private updateEventFromDb() {
+        console.log('updateEventFromDb called');
+        this.eventService.getEvent(this.eventId).subscribe(e => {
             this.event = e;
             this.event.startDateString = moment(this.event.startDateUtc.toISOString()).format();
             this.event.endDateString = moment(this.event.endDateUtc.toISOString()).format();
@@ -48,10 +59,6 @@ export class EventDraftSchedule {
                 })
             }
 
-            this.eventSchedule = new EventSchedule(this.event);
-        });
-        this.eventService.addedActivity$.subscribe(a => {
-            this.event.activities.push(a);
             this.eventSchedule = new EventSchedule(this.event);
         });
     }
