@@ -1,5 +1,7 @@
 # New Creations Connect
 
+A mobile app for the church to view and register for multi-congregational meetings (Family Camps, Advances, etc.)
+
 ## Running Locally
 
 1. You will need the latest version of Node and NPM on your machine. You can download it [here](https://nodejs.org).
