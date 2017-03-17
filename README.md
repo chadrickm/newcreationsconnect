@@ -1,6 +1,6 @@
 # New Creations Connect
 
-A mobile app for the church to view and register for multi-congregational meetings (Family Camps, Advances, etc.)
+A mobile app for the church to view and plan for upcoming multi-congregational meetings (Family Camps, Advances, etc.)
 
 ## Running Locally
 
