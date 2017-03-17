@@ -2,6 +2,9 @@
 
 ## Running Locally
 
+1. You will need the latest version of Node and NPM on your machine. You can download it [here](https://nodejs.org).
+2. Clone the repository (I use [SourceTree](https://www.sourcetreeapp.com/) to manage git).
+
 Use local npm packages
 
 ```
