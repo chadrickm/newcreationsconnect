@@ -5,6 +5,7 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 import { EventNew } from '../pages/event-new/event-new';
 import { EventList } from '../pages/event-list/event-list';
 import { Home } from '../pages/home/home';
+import { Login } from '../pages/login/login';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { Home } from '../pages/home/home';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = Home;
+  rootPage: any = EventList;
 
   pages: Array<{title: string, component: any, params: any}>;
 
@@ -23,7 +24,8 @@ export class MyApp {
     this.pages = [
       //{ title: 'New Creations Connect', component: Home, params: undefined },
       { title: 'New Event (Draft)', component: EventNew, params: {id: 'new'} },
-      { title: 'Upcoming Events', component: EventList, params: undefined }
+      { title: 'Upcoming Events', component: EventList, params: undefined },
+      { title: 'Login/Register', component: Login, params: undefined }
     ];
   }
 

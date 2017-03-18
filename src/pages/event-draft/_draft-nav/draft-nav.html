@@ -1,20 +1,18 @@
-<!--<ion-content>-->
-    <div>
-        <button ion-button icon-left full [outline]="activePage === 'detail'" (click)="saveAndNavToEventDetail()">
-            <ion-icon name="paper"></ion-icon>
-            Event Details
-        </button>
-        <button ion-button icon-left full [outline]="activePage === 'schedule'" (click)="saveAndNavToEventSchedule()">
-            <ion-icon name="calendar"></ion-icon>
-            Schedule / Speakers
-        </button>
-        <button ion-button icon-left full [outline]="activePage === 'team'" (click)="saveAndNavToEventTeam()">
-            <ion-icon name="people"></ion-icon>
-            Organizing Team
-        </button>
-        <p text-center>
-            <button ion-button color="light" (click)="saveEvent()">Save</button>
-            <button ion-button color="light" (click)="saveEvent()">Sumbit for Review</button>
-        </p>
-    </div>
-<!--</ion-content>-->
+<div>
+    <button ion-button icon-left full [outline]="activePage === 'detail'" (click)="saveAndNavToEventDetail()">
+        <ion-icon name="paper"></ion-icon>
+        Event Details
+    </button>
+    <button ion-button icon-left full [outline]="activePage === 'schedule'" (click)="saveAndNavToEventSchedule()">
+        <ion-icon name="calendar"></ion-icon>
+        Schedule / Speakers
+    </button>
+    <button ion-button icon-left full [outline]="activePage === 'team'" (click)="saveAndNavToEventTeam()">
+        <ion-icon name="people"></ion-icon>
+        Organizing Team
+    </button>
+    <p text-center>
+        <button ion-button color="light" (click)="saveEvent()">Save</button>
+        <button ion-button color="light" *ngIf="event.status !== 'Review'" (click)="submitEventForReview()">Sumbit for Review</button>
+    </p>
+</div>

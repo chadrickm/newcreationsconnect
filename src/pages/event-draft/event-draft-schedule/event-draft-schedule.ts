@@ -44,7 +44,6 @@ export class EventDraftSchedule {
     }
 
     private updateEventFromDb() {
-        console.log('updateEventFromDb called');
         this.eventService.getEvent(this.eventId).subscribe(e => {
             this.event = e;
             this.event.startDateString = moment(this.event.startDateUtc.toISOString()).format();

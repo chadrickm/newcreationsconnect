@@ -71,4 +71,17 @@ export class DraftNav {
         });
         toast.present();
     }
+
+    submitEventForReview() {
+        this.eventService.submitEventForReview(this.event, () => {
+            if (!this.eventService.validationResult.isSuccessful()) {
+                let modal = this.modalController.create(
+                    ValidationResults,
+                    { messages: this.eventService.validationResult.messages, title: 'Errors Submitting Event for Review' });
+                modal.present();
+            } else {
+                this.presentToast('Event Successfully Submitted for Review');
+            }
+        })
+    }
 }

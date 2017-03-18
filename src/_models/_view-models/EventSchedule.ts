@@ -39,7 +39,6 @@ export class EventSchedule {
                 var dateTime: Date = activity.startDateUtc;
                 return dateTime;
             });
-            console.log('activities ordered');
 
             this.days.push(newDay);
 

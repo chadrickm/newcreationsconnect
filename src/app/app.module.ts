@@ -7,7 +7,7 @@ import { MyApp } from './app.component';
 import { UtilityService } from '../_services/_common/utility.service';
 import { EventService } from '../_services/event.service';
 import { ValidationResult, ValidationMessageTypes } from '../_services/_common/validation';
-import { EventTypes } from '../_models/Event';
+import { EventTypes, EventStatuses } from '../_models/Event';
 import { ActivityTypes } from '../_models/Activity';
 
 import { ActivityEdit } from '../pages/event-draft/event-draft-schedule/activity-edit/activity-edit';
@@ -73,6 +73,7 @@ const cloudSettings: CloudSettings = {
   providers: [
     ActivityTypes,
     EventService,
+    EventStatuses,
     EventTypes,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UtilityService,

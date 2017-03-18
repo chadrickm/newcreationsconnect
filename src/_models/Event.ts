@@ -29,3 +29,10 @@ export class EventTypes {
     conferenceCall: string = 'Conference Call'
     inPerson: string = 'In Person';
 }
+
+export class EventStatuses {
+    draft: string = 'Draft';
+    review: string = 'Review';
+    active: string = 'Active';
+    archived: string = 'Archived';
+}

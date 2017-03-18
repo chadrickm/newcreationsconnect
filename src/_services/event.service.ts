@@ -9,7 +9,7 @@ import { ValidationResult, ValidationMessageTypes } from '../_services/_common/v
 import { UtilityService } from '../_services/_common/utility.service';
 import { ReplaySubject } from 'rxjs';
 
-import { Event } from '../_models/Event';
+import { Event, EventStatuses } from '../_models/Event';
 import { Activity } from '../_models/Activity';
 
 @Injectable()
@@ -33,23 +33,33 @@ export class EventService {
     constructor(
         private db: Database,
         private util: UtilityService,
-        private messageTypes: ValidationMessageTypes
+        private messageTypes: ValidationMessageTypes,
+        private eventStatuses: EventStatuses
     ) {
         this.db.status().subscribe(status => console.log(status));
         this.eventsDbCollection
-            .findAll({ status: "Active" }, { status: "Draft" })
+            .findAll(
+                { status: this.eventStatuses.active }, 
+                { status: this.eventStatuses.draft },
+                { status: this.eventStatuses.review } )
             .watch()
             .subscribe(events => {
-                this.activeEvents.next(_.filter(events, event => {
-                    return event.status === 'Active';
+                this.activeEvents.next(_.filter(events, e => {
+                    var event: Event = e;
+                    return event.status === this.eventStatuses.active;
                 }));
-                this.draftEvents.next(_.filter(events, event => {
-                    return event.status === 'Draft';
+                this.draftEvents.next(_.filter(events, e => {
+                    var event: Event = e;
+                    var addToDraftList = (event.status === this.eventStatuses.draft || event.status === this.eventStatuses.review);
+                    //addToDraftList = event.createdByUsername === 
+                    return addToDraftList;
                 }));
             });
     }
 
     saveEvent(event: Event, callback: any) {
+
+        console.log(event);
 
         this.validationResult = new ValidationResult();
 
@@ -125,7 +135,9 @@ export class EventService {
             this.validationResult.addMessage("State is Required", this.messageTypes.error);
         }
 
-        callback();
+        if (callback) {
+            callback();
+        }
     }
 
     saveActivity(_eventId: string, _activity: Activity, callback: any) {
@@ -203,6 +215,19 @@ export class EventService {
 
         if (this.util.isNullOrEmpty(_activity.endDateString)) {
             this.validationResult.addMessage("End Date is Required", this.messageTypes.error);
+        }
+
+        callback();
+    }
+
+    submitEventForReview(_event: Event, callback: any) {
+
+        this.validateEvent(_event, undefined);
+        console.log(this.validationResult);
+        
+        if (this.validationResult.isSuccessful()) {
+            _event.status = this.eventStatuses.review;
+            this.saveEvent(_event, callback);
         }
 
         callback();
