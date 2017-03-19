@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as _ from 'underscore';
 import * as moment from 'moment';
 
+import { AlertController } from 'ionic-angular';
 import { Database } from '@ionic/cloud-angular';
 import { Subject } from 'rxjs/Subject';
 
@@ -29,19 +30,33 @@ export class EventService {
     activityModifiedSubject: Subject<any> = new Subject<any>();
     activityModified$ = this.activityModifiedSubject.asObservable();
 
+    dbStatus: string;
 
     constructor(
+        private alertController: AlertController,
         private db: Database,
         private util: UtilityService,
         private messageTypes: ValidationMessageTypes,
         private eventStatuses: EventStatuses
     ) {
-        this.db.status().subscribe(status => console.log(status));
+        this.db.status().subscribe(status => {
+            this.dbStatus = status.type;
+            console.log("subscribe dbStatus: " + this.dbStatus);
+            
+            if (this.dbStatus === "unconnected" || this.dbStatus === "reconnecting") {
+                setTimeout(() => {
+                    console.log("doing dbStatus check after 2 seconds")
+                    if (this.dbStatus !== "connected") {
+                        this.showDbWakeUpPrompt();
+                    }
+                }, 3000);
+            }
+        });
         this.eventsDbCollection
             .findAll(
-                { status: this.eventStatuses.active }, 
-                { status: this.eventStatuses.draft },
-                { status: this.eventStatuses.review } )
+            { status: this.eventStatuses.active },
+            { status: this.eventStatuses.draft },
+            { status: this.eventStatuses.review })
             .watch()
             .subscribe(events => {
                 this.activeEvents.next(_.filter(events, e => {
@@ -180,7 +195,7 @@ export class EventService {
                                 if (this.addedActivity) {
                                     this.activityAddedSubject.next(this.addedActivity);
                                 }
-                                if (this.activityUpdated){
+                                if (this.activityUpdated) {
                                     this.activityModifiedSubject.next();
                                 }
                             }
@@ -222,12 +237,28 @@ export class EventService {
 
         this.validateEvent(_event, undefined);
         console.log(this.validationResult);
-        
+
         if (this.validationResult.isSuccessful()) {
             _event.status = this.eventStatuses.review;
             this.saveEvent(_event, callback);
         }
 
         callback();
+    }
+
+    showDbWakeUpPrompt() {
+        let prompt = this.alertController.create({
+            title: 'Test Database is Asleep',
+            message: "The test database is asleep. Attempt to wake it up?",
+            buttons: [
+                {
+                    text: 'Wake It Up',
+                    handler: data => {
+                        this.db.connect();
+                    }
+                }
+            ]
+        });
+        prompt.present();
     }
 }
