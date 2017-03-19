@@ -29,18 +29,33 @@
       <ion-label>End Time</ion-label>
       <ion-datetime displayFormat="h:mm A" [(ngModel)]="event.endDateString"></ion-datetime>
     </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>Address</ion-label>
-      <ion-input type="text" placeholder="Address" [(ngModel)]="event.address"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>City</ion-label>
-      <ion-input type="text" placeholder="City" [(ngModel)]="event.city"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>State</ion-label>
-      <ion-input type="text" placeholder="State" [(ngModel)]="event.state"></ion-input>
-    </ion-item>
+    
+    <div *ngIf="event.eventType === 'On Location'">
+      <ion-item>
+        <ion-label color="primary" stacked>Address</ion-label>
+        <ion-input type="text" placeholder="Address" [(ngModel)]="event.address"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" stacked>City</ion-label>
+        <ion-input type="text" placeholder="City" [(ngModel)]="event.city"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" stacked>State</ion-label>
+        <ion-input type="text" placeholder="State" [(ngModel)]="event.state"></ion-input>
+      </ion-item>
+    </div>
+
+    <div *ngIf="event.eventType === 'Online'">
+      <ion-item>
+        <ion-label color="primary" stacked>Web URL (if applicable)</ion-label>
+        <ion-input type="text" placeholder="URL" [(ngModel)]="event.url"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" stacked>Access Code (blank if sessions have codes)</ion-label>
+        <ion-input type="text" placeholder="Access Code" [(ngModel)]="event.accessCode"></ion-input>
+      </ion-item>
+    </div>
   </div>
+  
   <draft-nav [event]="event" [activePage]="'detail'"></draft-nav>
 </ion-content>

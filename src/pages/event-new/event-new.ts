@@ -7,7 +7,7 @@ import * as moment from 'moment';
 
 import { EventService } from '../../_services/event.service';
 
-import { Event } from '../../_models/Event';
+import { Event, EventStatuses, EventTypes } from '../../_models/Event';
 import { Login } from '../login/login';
 import { ValidationResults } from '../../app/components/_common/validation-results/validation-results.component';
 
@@ -25,6 +25,8 @@ export class EventNew implements OnInit {
   constructor(
     public auth: Auth,
     private eventService: EventService,
+    private eventStatuses: EventStatuses,
+    private eventTypes: EventTypes,
     private modalController: ModalController,
     public navController: NavController,
     private navParams: NavParams,
@@ -36,7 +38,8 @@ export class EventNew implements OnInit {
 
     if (this.id === 'new') {
       this.newEvent = new Event();
-      this.newEvent.status = 'Draft';
+      this.newEvent.eventType = this.eventTypes.onLocation;
+      this.newEvent.status = this.eventStatuses.draft;
       this.newEvent.startDateString = moment(new Date().toISOString()).add(1, 'day').add(1, 'hour').startOf('day').format();
       this.newEvent.endDateString = moment(new Date().toISOString()).add(1, 'day').add(1, 'hour').startOf('day').format();
       this.newEvent.timezoneOffset = ((moment().toDate().getTimezoneOffset() / 60) * -1);

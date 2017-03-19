@@ -26,8 +26,9 @@ export class Event {
 
 export class EventTypes {
     online: string = 'Online';
-    conferenceCall: string = 'Conference Call'
-    inPerson: string = 'In Person';
+    onLocation: string = 'On Location';
+
+    all: string[] = [this.onLocation, this.online];
 }
 
 export class EventStatuses {

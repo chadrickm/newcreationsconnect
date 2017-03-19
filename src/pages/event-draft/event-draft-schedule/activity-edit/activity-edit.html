@@ -37,6 +37,18 @@
         <ion-label color="primary" stacked *ngIf="activity.type === activityTypes.speaker">Title</ion-label>
         <ion-input type="text" [placeholder]="activity.type !== activityTypes.speaker ? 'Name' : 'Title'" [(ngModel)]="activity.name"></ion-input>
     </ion-item>
+
+    <div *ngIf="eventType === 'Online'">
+      <ion-item>
+        <ion-label color="primary" stacked>Web URL (if applicable)</ion-label>
+        <ion-input type="text" placeholder="URL" [(ngModel)]="activity.url"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" stacked>Access Code (only if activity has specific code)</ion-label>
+        <ion-input type="text" placeholder="Access Code" [(ngModel)]="activity.accessCode"></ion-input>
+      </ion-item>
+    </div>
+
     <p>
       <button ion-button (click)="saveActivity()">Save</button>
     </p>

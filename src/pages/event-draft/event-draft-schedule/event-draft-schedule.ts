@@ -103,6 +103,7 @@ export class EventDraftSchedule {
             ActivityEdit,
             {
                 eventId: this.event.id,
+                eventType: this.event.eventType,
                 eventDate: date.toISOString(),
                 activity: 'new'
             });

@@ -10,7 +10,7 @@ import { ValidationResult, ValidationMessageTypes } from '../_services/_common/v
 import { UtilityService } from '../_services/_common/utility.service';
 import { ReplaySubject } from 'rxjs';
 
-import { Event, EventStatuses } from '../_models/Event';
+import { Event, EventStatuses, EventTypes } from '../_models/Event';
 import { Activity } from '../_models/Activity';
 
 @Injectable()
@@ -35,9 +35,10 @@ export class EventService {
     constructor(
         private alertController: AlertController,
         private db: Database,
-        private util: UtilityService,
+        private eventStatuses: EventStatuses,
+        private eventTypes: EventTypes,
         private messageTypes: ValidationMessageTypes,
-        private eventStatuses: EventStatuses
+        private util: UtilityService
     ) {
         this.db.status().subscribe(status => {
             this.dbStatus = status.type;
@@ -136,16 +137,18 @@ export class EventService {
             this.validationResult.addMessage("End Date is Required", this.messageTypes.error);
         }
 
-        if (this.util.isNullOrEmpty(event.address)) {
-            this.validationResult.addMessage("Address is Required", this.messageTypes.error);
-        }
+        if (event.eventType === this.eventTypes.onLocation) {
+            if (this.util.isNullOrEmpty(event.address)) {
+                this.validationResult.addMessage("Address is Required", this.messageTypes.error);
+            }
 
-        if (this.util.isNullOrEmpty(event.city)) {
-            this.validationResult.addMessage("City is Required", this.messageTypes.error);
-        }
+            if (this.util.isNullOrEmpty(event.city)) {
+                this.validationResult.addMessage("City is Required", this.messageTypes.error);
+            }
 
-        if (this.util.isNullOrEmpty(event.state)) {
-            this.validationResult.addMessage("State is Required", this.messageTypes.error);
+            if (this.util.isNullOrEmpty(event.state)) {
+                this.validationResult.addMessage("State is Required", this.messageTypes.error);
+            }
         }
 
         if (callback) {

@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { ModalController, NavController, NavParams, ViewController } from 'ionic-angular';
 import * as moment from 'moment';
 
-//import { ValidationResult } from '../../../_services/_common/validation';
 import { EventService } from '../../../../_services/event.service';
 import { Activity, ActivityTypes } from '../../../../_models/Activity';
+import { EventTypes } from '../../../../_models/Event';
 
 import { ValidationResults } from '../../../../app/components/_common/validation-results/validation-results.component';
 
@@ -15,6 +15,7 @@ import { ValidationResults } from '../../../../app/components/_common/validation
 export class ActivityEdit {
 
     eventId: string;
+    eventType: string;
     eventDate: string;
     activity: Activity = new Activity();
     startYearRange: number = moment().year();
@@ -23,6 +24,7 @@ export class ActivityEdit {
     constructor(
         public activityTypes: ActivityTypes,
         private eventService: EventService,
+        private eventTypes: EventTypes,
         private modalController: ModalController,
         private navController: NavController,
         private navParams: NavParams,
@@ -30,6 +32,7 @@ export class ActivityEdit {
     ) {
         // if we have an eventId it's a new activity
         this.eventId = this.navParams.get('eventId');
+        this.eventType = this.navParams.get('eventType');
         var activity = this.navParams.get('activity');
 
         if (activity !== 'new') {
