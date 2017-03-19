@@ -4,6 +4,7 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { EventNew } from '../pages/event-new/event-new';
 import { EventList } from '../pages/event-list/event-list';
+import { EventDraftList } from '../pages/event-draft/event-draft-list/event-draft-list';
 import { Home } from '../pages/home/home';
 import { Login } from '../pages/login/login';
 
@@ -25,6 +26,7 @@ export class MyApp {
       //{ title: 'New Creations Connect', component: Home, params: undefined },
       { title: 'New Event (Draft)', component: EventNew, params: {id: 'new'} },
       { title: 'Upcoming Events', component: EventList, params: undefined },
+      { title: 'Event Drafts', component: EventDraftList, params: undefined },
       { title: 'Login/Register', component: Login, params: undefined }
     ];
   }

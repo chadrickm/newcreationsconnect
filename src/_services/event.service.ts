@@ -59,8 +59,6 @@ export class EventService {
 
     saveEvent(event: Event, callback: any) {
 
-        console.log(event);
-
         this.validationResult = new ValidationResult();
 
         // in case this does not default to zero

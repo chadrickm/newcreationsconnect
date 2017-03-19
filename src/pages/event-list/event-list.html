@@ -5,12 +5,58 @@
     </button>
     <ion-title>Upcoming Events</ion-title>
   </ion-navbar>
+  <ion-segment [(ngModel)]="eventFilter" (ionChange)="eventFilterChanged()">
+    <ion-segment-button value="global-church">
+      Global-Church Events
+    </ion-segment-button>
+    <ion-segment-button value="local-church">
+      Local-Church Events
+    </ion-segment-button>
+  </ion-segment>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <button ion-item *ngFor="let event of events" (click)="navEventDetails(event.id)">
-      {{event.name}}
-    </button>
-  </ion-list>
+
+  <ion-card *ngIf="events.length === 0" (click)="goToEventNewPage()">
+    <ion-card-content>
+      <p>
+        There are no upcoming events yet. If you know of one you can create it by clicking this area.
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngFor="let event of events" (click)="navEventDetails(event.id)">
+    <ion-item>
+      <!--<ion-avatar item-left>
+        <img src="img/marty-avatar.png">
+      </ion-avatar>-->
+      <h2>{{event.name}}</h2>
+      <p>
+        {{event.startDateString | date: 'EEEE, MMMM dd, yyyy ~ h:mm a'}}
+      </p>
+    </ion-item>
+    <ion-card-content>
+      <p>{{event.description}}</p>
+    </ion-card-content>
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-left clear small>
+        <ion-icon name="contact"></ion-icon>
+        <div>999 Going</div>
+      </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-left clear small>
+        <ion-icon name="text"></ion-icon>
+        <div>999 New Msgs</div>
+      </button>
+      </ion-col>
+      <ion-col center text-center>
+        <ion-note>
+          364d 11h
+        </ion-note>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
 </ion-content>

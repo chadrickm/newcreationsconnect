@@ -54,19 +54,6 @@ export class EventDraftDetail implements OnInit {
     });
   }
 
-  saveAndNavToEventSchedule() {
-    this.saveEvent();
-    this.navController.push(EventDraftSchedule, { id: this.event.id })
-      .then(() => {
-        const index = this.navController.getActive().index;
-        this.navController.remove(index - 1);
-      });
-  }
-
-  saveAndNavToEventTeam() {
-    alert('TODO: save and navigate to Team');
-  }
-
   presentToast(_message: string) {
     let toast = this.toastController.create({
       message: _message,
