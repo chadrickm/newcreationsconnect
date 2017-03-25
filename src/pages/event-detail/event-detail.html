@@ -3,14 +3,30 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>{{event.name}}</ion-title>
+    <ion-title>Event Details</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <div *ngIf="event">
-    <p>
-      {{event.name}}
-    </p>
+  <ion-item>
+    <h2>{{event.name}}</h2>
+    <button *ngIf="isCreator" ion-button small item-right (click)="openEventDraftDetail()" title="Edit Event">
+      <ion-icon name="create"></ion-icon>
+    </button>
+  </ion-item>
+  <div *ngIf="eventSchedule">
+    <ion-item *ngFor="let scheduleDay of eventSchedule.days">
+      <ion-item>
+        <h3>
+          {{scheduleDay.dayString}}
+        </h3>
+      </ion-item>
+      <div *ngIf="scheduleDay.activities && scheduleDay.activities.length > 0">
+        <ion-item *ngFor="let activity of scheduleDay.activities">
+          {{activity.startDateString | date: 'shortTime'}} - {{activity.endDateString | date: 'shortTime'}}:
+          <br/>{{activity.name}}
+        </ion-item>
+      </div>
+    </ion-item>
   </div>
 </ion-content>

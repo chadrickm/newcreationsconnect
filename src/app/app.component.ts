@@ -3,10 +3,10 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { EventNew } from '../pages/event-new/event-new';
-import { EventList } from '../pages/event-list/event-list';
 import { EventDraftList } from '../pages/event-draft/event-draft-list/event-draft-list';
-import { Home } from '../pages/home/home';
+import { EventList } from '../pages/event-list/event-list';
 import { Login } from '../pages/login/login';
+import { CheckForUpdates } from '../pages/check-for-updates/check-for-updates';
 
 
 @Component({
@@ -25,9 +25,9 @@ export class MyApp {
     this.pages = [
       //{ title: 'New Creations Connect', component: Home, params: undefined },
       { title: 'New Event (Draft)', component: EventNew, params: {id: 'new'} },
-      { title: 'Upcoming Events', component: EventList, params: undefined },
       { title: 'Event Drafts', component: EventDraftList, params: undefined },
-      { title: 'Login/Register', component: Login, params: undefined }
+      { title: 'Login/Register', component: Login, params: undefined },
+      { title: 'Check for Updates', component: CheckForUpdates, params: undefined }
     ];
   }
 

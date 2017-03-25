@@ -11,7 +11,6 @@ import { EventService } from '../../../_services/event.service';
 
 import { Event } from '../../../_models/Event';
 import { ValidationResults } from '../../../app/components/_common/validation-results/validation-results.component';
-import { EventDraftSchedule } from '../event-draft-schedule/event-draft-schedule';
 
 @Component({
   selector: 'event-draft-detail',

@@ -11,6 +11,7 @@ import { EventTypes, EventStatuses } from '../_models/Event';
 import { ActivityTypes } from '../_models/Activity';
 
 import { ActivityEdit } from '../pages/event-draft/event-draft-schedule/activity-edit/activity-edit';
+import { CheckForUpdates } from '../pages/check-for-updates/check-for-updates';
 import { ComingSoon } from '../pages/coming-soon/coming-soon';
 import { DraftNav } from '../pages/event-draft/_draft-nav/draft-nav';
 import { EventDetail } from '../pages/event-detail/event-detail';
@@ -38,6 +39,7 @@ const cloudSettings: CloudSettings = {
 @NgModule({
   declarations: [
     ActivityEdit,
+    CheckForUpdates,
     ComingSoon,
     DraftNav,
     EventDetail,
@@ -60,6 +62,7 @@ const cloudSettings: CloudSettings = {
   entryComponents: [
     MyApp,
     ActivityEdit,
+    CheckForUpdates,
     ComingSoon,
     DraftNav,
     EventDetail,

@@ -44,13 +44,14 @@ export class EventService {
             this.dbStatus = status.type;
             console.log("subscribe dbStatus: " + this.dbStatus);
             
-            if (this.dbStatus === "unconnected" || this.dbStatus === "reconnecting") {
+            if (this.dbStatus !== "connected") {
+                var milliseconds = 3000;
                 setTimeout(() => {
-                    console.log("doing dbStatus check after 2 seconds")
+                    console.log("doing dbStatus check after " + (milliseconds / 1000) + " seconds")
                     if (this.dbStatus !== "connected") {
                         this.showDbWakeUpPrompt();
                     }
-                }, 3000);
+                }, milliseconds);
             }
         });
         this.eventsDbCollection

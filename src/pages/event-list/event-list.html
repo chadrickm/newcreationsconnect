@@ -48,13 +48,14 @@
         </ion-avatar>-->
         <h2>{{event.name}}</h2>
         <p>
-          {{event.startDateString | date: 'EEEE, MMMM dd, yyyy ~ h:mm a'}}
+          Starts: {{event.startDateString | date: 'EEEE, MMMM dd, yyyy ~ h:mm a'}}<br/>
+          Ends: {{event.endDateString | date: 'EEEE, MMMM dd, yyyy ~ h:mm a'}}
         </p>
       </ion-item>
       <ion-card-content>
         <p>{{event.description}}</p>
       </ion-card-content>
-      <ion-row>
+      <!--<ion-row>
         <ion-col>
           <button ion-button icon-left clear small>
           <ion-icon name="contact"></ion-icon>
@@ -72,7 +73,7 @@
             364d 11h
           </ion-note>
         </ion-col>
-      </ion-row>
+      </ion-row>-->
     </ion-card>
   </div>
 
