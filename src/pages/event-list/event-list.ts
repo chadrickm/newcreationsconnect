@@ -10,6 +10,7 @@ import { Event } from '../../_models/Event';
 import { EventDetail } from '../event-detail/event-detail';
 import { EventNew } from '../event-new/event-new';
 import { ComingSoon } from '../coming-soon/coming-soon';
+import { ReviewDrafts } from '../event-draft/review-drafts/review-drafts';
 
 @Component({
   selector: 'event-list',
@@ -39,6 +40,10 @@ export class EventList {
 
   goToEventNewPage() {
     this.navController.push(EventNew, { id: "new" });
+  }
+
+  gotoReviewEventDrafts() {
+    this.navController.push(ReviewDrafts);
   }
 
   eventFilterChanged() {

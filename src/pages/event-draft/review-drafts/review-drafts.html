@@ -1,0 +1,22 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+        <ion-title>Existing Draft Events</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    If the event you want to add is listed, we are already in the process of adding it. If it's not listed, you can create the
+    event draft and submit it for review.
+    <hr/>
+    <ion-list>
+        <button ion-item *ngFor="let event of events">
+            {{event.name}}
+        </button>
+    </ion-list>
+    <button ion-button block (click)="gotoEventNew()">
+        Add Event
+    </button>
+</ion-content>

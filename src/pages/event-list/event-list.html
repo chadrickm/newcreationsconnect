@@ -41,6 +41,11 @@
   </ion-card>
 
   <div *ngIf="eventFilter === 'global-church'">
+    <ion-card (click)="gotoReviewEventDrafts()">
+      <ion-card-content>
+        Don't see event? Submit it (click here)...
+      </ion-card-content>
+    </ion-card>
     <ion-card *ngFor="let event of events" (click)="navEventDetails(event.id)">
       <ion-item>
         <!--<ion-avatar item-left>

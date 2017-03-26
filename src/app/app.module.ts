@@ -23,6 +23,7 @@ import { EventList } from '../pages/event-list/event-list';
 import { Home } from '../pages/home/home';
 import { Login } from '../pages/login/login';
 import { Register } from '../pages/register/register';
+import { ReviewDrafts } from '../pages/event-draft/review-drafts/review-drafts';
 import { ValidationResults } from '../app/components/_common/validation-results/validation-results.component';
 
 const cloudSettings: CloudSettings = {
@@ -52,6 +53,7 @@ const cloudSettings: CloudSettings = {
     Login,
     MyApp,
     Register,
+    ReviewDrafts,
     ValidationResults
   ],
   imports: [
@@ -74,6 +76,7 @@ const cloudSettings: CloudSettings = {
     Home,
     Login,
     Register,
+    ReviewDrafts,
     ValidationResults
   ],
   providers: [
