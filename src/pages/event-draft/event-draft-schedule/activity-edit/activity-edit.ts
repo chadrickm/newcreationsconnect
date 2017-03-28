@@ -40,11 +40,12 @@ export class ActivityEdit {
             this.activity.startDateString = activity.startDateString
         }
         else if (activity === 'new') {
-            var eventDateString = this.navParams.get('eventDate');
+            var eventStartDateString = this.navParams.get('eventStartDate');
+            var eventEndDateString = this.navParams.get('eventEndDate');
             this.activity = new Activity();
-            this.activity.startDateString = moment(eventDateString).format();
-            this.activity.endDateString = moment(eventDateString).format();
-            this.eventDate = moment(eventDateString).format('ddd, MMMM Do');
+            this.activity.startDateString = moment(eventStartDateString).format();
+            this.activity.endDateString = moment(eventEndDateString).format();
+            this.eventDate = moment(eventStartDateString).format('ddd, MMMM Do');
         }
     }
 

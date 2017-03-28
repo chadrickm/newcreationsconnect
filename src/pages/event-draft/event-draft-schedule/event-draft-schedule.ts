@@ -98,13 +98,14 @@ export class EventDraftSchedule {
         toast.present();
     }
 
-    openAddActivityDialog(date: Date) {
+    openAddActivityDialog(startDate: Date, endDate: Date) {
         let modal = this.modalController.create(
             ActivityEdit,
             {
                 eventId: this.event.id,
                 eventType: this.event.eventType,
-                eventDate: date.toISOString(),
+                eventStartDate: startDate.toISOString(),
+                eventEndDate: endDate.toISOString(),
                 activity: 'new'
             });
         modal.present();

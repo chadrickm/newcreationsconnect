@@ -24,7 +24,7 @@
                 <p>
                     {{scheduleDay.dayString}}
                 </p>
-                <button ion-button small item-right (click)="openAddActivityDialog(scheduleDay.dayDate)" title="Add Activity">
+                <button ion-button small item-right (click)="openAddActivityDialog(event.startDateUtc, event.endDateUtc)" title="Add Activity">
                     <ion-icon name="add"></ion-icon>
                 </button>
             </ion-item>
