@@ -28,7 +28,7 @@
     </ion-item>
     <ion-item>
       <ion-label>Start Time</ion-label>
-      <ion-datetime displayFormat="h:mm A" [(ngModel)]="newEvent.startDateString"></ion-datetime>
+      <ion-datetime displayFormat="h:mm A" [(ngModel)]="newEvent.startDateString" (ionChange)="startDateChanged()"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label>End Date</ion-label>

@@ -62,4 +62,12 @@ export class EventDraftDetail implements OnInit {
     });
     toast.present();
   }
+
+  startDateChanged() {
+    var mStartDateTimeString = moment(this.event.startDateString);
+    var mEndDateTimeString = moment(this.event.endDateString);
+    if (mEndDateTimeString.isSame(mStartDateTimeString) || mEndDateTimeString.isBefore(mStartDateTimeString) ) {
+      this.event.endDateString = mStartDateTimeString.add(1, 'hour').format();
+    }
+  }
 }

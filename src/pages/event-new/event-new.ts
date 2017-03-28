@@ -60,12 +60,20 @@ export class EventNew implements OnInit {
     this.eventService.saveEvent(this.newEvent, () => {
       if (!this.eventService.validationResult.isSuccessful()) {
         let modal = this.modalController.create(
-          ValidationResults, 
+          ValidationResults,
           { messages: this.eventService.validationResult.messages, title: 'Errors Saving Event' });
         modal.present();
       } else {
         this.navController.pop();
       }
     });
+  }
+
+  startDateChanged() {
+    var mStartDateTimeString = moment(this.newEvent.startDateString);
+    var mEndDateTimeString = moment(this.newEvent.endDateString);
+    if (mEndDateTimeString.isSame(mStartDateTimeString) || mEndDateTimeString.isBefore(mStartDateTimeString) ) {
+      this.newEvent.endDateString = mStartDateTimeString.add(1, 'hour').format();
+    }
   }
 }

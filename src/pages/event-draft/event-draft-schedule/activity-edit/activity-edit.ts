@@ -63,8 +63,11 @@ export class ActivityEdit {
     }
 
     startDateChanged() {
-        var mEndDateTimeString = moment(this.activity.startDateString).add(1, 'hour');
-        this.activity.endDateString = mEndDateTimeString.format();
+        var mStartDateTimeString = moment(this.activity.startDateString);
+        var mEndDateTimeString = moment(this.activity.endDateString);
+        if (mEndDateTimeString.isSame(mStartDateTimeString) || mEndDateTimeString.isBefore(mStartDateTimeString) ) {
+        this.activity.endDateString = mStartDateTimeString.add(1, 'hour').format();
+        }
     }
 
     typeChanged() {
